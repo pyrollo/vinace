@@ -1,0 +1,40 @@
+table { width:100%; border-collapse:collapse; }
+
+
+body { margin:0; font-family:sans-serif; text-align:justify;}
+body div { margin:10px; }
+
+div.BOOK { margin:0; }
+div.TOC { margin:10px; }
+
+div.NAVHEADER, div.NAVFOOTER, div.BOOK div.TITLEPAGE {
+    background:orange; text-align:center; margin:0; }
+div.NAVHEADER a, div.NAVFOOTER a {
+    text-decoration:none; font-weight:bold; color:brown; }
+
+div.BOOK div.TITLEPAGE h1 { margin:0; padding-top:8px; padding-bottom:8px; }
+
+hr { border:none; background:brown; height:5px; }
+
+h1, h2, h3 { color:brown; }
+td { border:solid 2px orange; }
+th { border:solid 2px orange; background:orange; color:brown; }
+
+img { text-align:center; margin:auto; display:block; }
+
+a { text-decoration:none; color:brown; }
+a:visited { }
+a:hover { color:red; }
+
+pre.programlisting { font-weight:bold; border-left:solid 3px orange; padding-left:3px;}
+
+div.NAVHEADER table, div.NAVFOOTER table { width:95%; margin:auto; }
+div.NAVHEADER td, div.NAVFOOTER td { border:none; }
+div.NAVHEADER th, div.NAVFOOTER th { border:none; color:brown; }
+
+div.NAVHEADER table { margin-top:1em; }
+div.NAVFOOTER table { margin-bottom:1em; }
+
+div.NAVFOOTER a:visited, div.NAVHEADER a:visited { font-weight:normal; }
+div.NAVFOOTER a:hover, div.NAVHEADER a:hover { color:red; }
+

@@ -1,0 +1,1132 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<book lang="en">
+    <title>Vinace documentation</title>
+    <chapter lang="en"><title>Introduction</title>
+        <para>Vinace is for VINtage Apple Computer Emulator. For now, it is an Apple //e 
+        64Ko emulator. It should easily evolve to an any Apple ][ model emulator.</para>
+        <para>This document contains two parts. The <emphasis>Using Vinace</emphasis>
+        explains how to use Vinace and the <emphasis>Inside Vinace</emphasis> tells about
+        how Vinace works.</para>
+        <para>This document is still being written, it is not a definitive version. Many 
+        information may be missing.</para>
+    </chapter>
+    <part><title>Using Vinace</title>
+        <chapter lang="en"><title>Quick start</title>
+            <para>If you are in a hurry, here are the directions for using Vinace.</para>
+            <para>To start Vinace, just launch <emphasis>vinace</emphasis> from inside
+            its directory.</para>
+            <para>To stop Apple from reading from disk drive, press <emphasis>Ctrl - 
+            Pause</emphasis>. To restart the Apple, press simultaneously <emphasis>Left
+            Alt - Ctrl - Pause</emphasis>.</para>
+            <para>To insert a disk, just drag the disk image file onto the disk drive.</para>
+        </chapter>
+        <chapter lang="en"><title>Keyboard</title>
+            <para>Here are the keys on the original Apple //e keyboard :</para>
+            <table>
+                <title>Apple //e keyboard keys</title>
+                <tgroup cols="2">
+                    <thead>
+                        <row><entry>Group</entry><entry>Keys</entry></row>
+                    </thead>
+                    <tbody>
+                        <row><entry>Letters</entry><entry>A to Z (uppercase, lowercase and control)</entry></row>
+                        <row><entry>Numbers</entry><entry>0 to 9</entry></row>
+                        <row><entry>Symbols</entry><entry>! @ # $ % ^ & * ( ) - _ + = { } [ ] : ; " ' ~ `| \  &lt; &gt; , . ? /</entry></row>
+                        <row><entry>Other keys</entry><entry>Esc, Tab, Return, Del, Arrows (left, right, down and up)</entry></row>
+                        <row><entry>Special key</entry><entry>Reset, Open apple, Closed apple</entry></row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <para>The virtual Apple keyboard is mapped to your computer keyboard. 
+            Letters (uppercase, lowercase and control), numbers, symbols and other 
+            keys are directly mapped to corresponding keys.</para>
+            <para>The <emphasis>Open apple</emphasis> and <emphasis>Closed 
+            apple</emphasis> keys are mapped to <emphasis>left Alt</emphasis> and 
+            <emphasis>right Alt</emphasis> keys.</para>
+            <para>The <emphasis>Ctrl - Reset</emphasis> keys combination is mapped to
+            <emphasis>Ctrl - Pause</emphasis> keys (the <emphasis>Reset</emphasis>
+            key alone had no effect on Apple keyboard).</para>
+            <para>This mean that, if you want to restart the Apple //e, you have to press
+            <emphasis>left Alt - Ctrl - Pause</emphasis> where, on the original keyboard,
+            you were pressing <emphasis>Open apple - Ctrl - Reset</emphasis>.</para>
+        </chapter>
+        <chapter lang="en"><title>Joystick</title>
+            <para>There is a simple joystick emulation in Vinace, using the numeric keypad.
+            Actually, the Apple joystick is able to detect 256 positions on each axis. The
+            Vinace joystick is only able to emulate three positions on each axis (0, 128 and 
+            255). This would fit to most of the games but should not be enough for those
+            making an accurate use of joystick.</para>
+            <para>The key "5" on the numeric keypad is the center position. Key "8" is for
+            up, key "2" for down, key "4" for left and "6" for right. Diagonal keys (7, 9, 1 and 
+            3)works also.</para>
+            <figure><title>Numeric keypad joystick emulation</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="numpad-joystick.png" format="PNG"/>
+                    </imageobject>
+                    <textobject>
+                        <phrase>The numeric keypad joystick emulation : how keys are binded
+                        to joystick positions.</phrase>
+                    </textobject>
+                </mediaobject>
+            </figure>
+            <para>There is no button emulation yet so <emphasis>left alt</emphasis> key
+            should be used for button 0 and  <emphasis>right alt</emphasis> key
+            for button 1.</para>
+        </chapter>
+        <chapter lang="en"><title>Disks and disk drives</title>
+            <para>Disk drives in Vinace are easy to use.</para>
+            <para>To open and close the drive, just click on the drive lid.</para>
+            <para>To insert a disk in a drive, just drag the disk image file onto the disk
+            drive. If successfully inserted, the disk name will appear on the drive and the
+            drive will be automatically closed.</para>
+            <para>Only <emphasis>.dsk</emphasis> files (DOS ordered disk images) are 
+            supported for now. Other formats (ProDOS ordered and nibbles disk images) will
+            be supported later.</para>
+            <para>Disk writing is not yet implemented.</para>
+            <para>Disk images can be found on Asimov repository in the Images section : </para>
+            <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/images/">
+            ftp://ftp.apple.asimov.net/pub/apple_II/images/</ulink></para>
+        </chapter>
+    </part>
+    <part><title>Inside Vinace</title>
+        <chapter lang="en"><title>General principles</title>
+            <para>Before going deep into Vinace, here are some general principles as an introduction.</para>
+            <section><title>Why another emulator?</title>
+                <para>Existing emulators have an old, not very convenient, graphical interface
+                (no use of mouse, command line to change disks).</para>
+                <para>Existing emulators are written in a performance purpose and not a 
+                comprehension or modular purpose.</para>
+                <para>Existing emulators are monolithics, not close enough to the original design 
+                and so not easy to make evolve.</para>
+                <para>I wanted to develop a not to difficult project to get back into C++.</para>
+            </section>
+            <section><title>What is a computer?</title>
+                <para>Basically, a computer is a processor (CPU), some memory, and some peripherals.</para>
+                <para>The processor is the core component of the computer. The CPU gets data from
+                memory, computes it and put it back into memory. </para>
+                <para>The processor can receive signals, like reset signal or interrupts signals. It
+                also gets a periodic signal from a clock that tells it when to perform cycles (an 
+                instruction is "made" of several cycles).</para>
+                <para>Except signals, the only communication between the processor and the rest of the 
+                world goes through the memory. As different types of memory are available (RAM, ROM 
+                or what so ever), a memory bus is in charge of interfacing the
+                processor to these types of memory. Depending of the address given by the processor, the 
+                memory bus forwards request to the right memory.</para>
+                <para>To drive peripherals, the processor uses the memory (once again, the only gate to 
+                the outside world). A specific type of memory, the I/O Unit is connected to the 
+                memory bus. The I/O Unit is not really memory as it does not store
+                information. When an address is accessed in the IOU, it activates something in a 
+                peripheral or read some information from it. For example, accessing address 15 could 
+                activate a light or reading from address 17 could read a
+                button status. That's basically the way processor interacts with peripherals.</para>
+                <para>If we put that all together, we have a "simple" schema of what is a computer :</para>
+                <figure><title>A simple computer</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="simple.png" format="PNG"/>
+                        </imageobject>
+                        <textobject>
+                            <phrase>A simple computer : a processor, a memory bus, some RAM, some ROM 
+                            and an I/O Unit.</phrase>
+                        </textobject>
+                    </mediaobject>
+                </figure>
+                <para>The orange box, containing CPU, memory and IOU but neither peripherals nor
+                clock, represents what I called the "core". The core is the minimal component
+                necessary for the computer to work. Peripherals only connect the computer to the
+                world and, in particular, the user but they are not necessary for
+                computing. I've put the clock outside because I consider the clock as an interface 
+                between the computer and the real time. We can change the clock
+                frequency without affecting the computer behavior. We could even use a manual clock 
+                to study a computer step by step.</para>
+            </section>
+            
+            <section><title>Three layers emulator design</title>
+                <para>I wanted to have a modular emulator that is flexible and easy to develop
+                new features on. I also wanted something that is very close to the reality.
+                For example, I wanted to be able to develop new emulated peripheral later
+                that I could "plug" in my emulator, just the way you plug peripherals to your
+                machine.</para>
+                <para>I decided to use a three layers design. Here are these three layers in one
+                schema :</para>
+
+                <figure><title>Three layers model</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="layers.png" format="PNG"/>
+                        </imageobject>
+                        <textobject>
+                            <phrase>Three layers model</phrase>
+                        </textobject>
+                    </mediaobject>
+                </figure>
+
+                <section><title>Core layer</title>
+                    <para>The core layer contains all components, and only them, needed to have a
+                    working computer. That means that we could instantiate only a core layer and
+                    play with it. That's interesting for studying purpose but it results in a
+                    deaf and blind computer. The core layer can be seen as the computer seen from
+                    inside itself (inside this layer, programs are running as if they were in the
+                    real computer).</para>
+                </section>
+                <section><title>Hardware layer</title>
+                    <para>The hardware layer is a software representation of the emulated computer.
+                    This representation is independent from the graphical interface. For example,
+                    a video output is represented by a pixel matrix, a joystick button by a
+                    simple flag.</para>
+
+                    <para>This layer should contain representation of all the objects from the
+                    emulated world, like floppy disks or ROM cartriges. It should also contain
+                    all the logic of the emulator so the next layer is just in charge of the
+                    user interface.</para>
+                </section>
+                <section><title>GUI layer</title>
+                    <para>GUI layer is in charge of representing the hardware layer to the user.</para>
+                </section>
+            </section>
+        </chapter>
+        <chapter lang="en"><title>Processor</title>
+            <para>The processor is a device that can execute a sequence of instructions stored 
+            in memory. These instructions may require the use of registers (small amounts of 
+            internal memory). They may also require reading from and writing to memory.</para>
+            <para>The periodicity of instruction execution is controlled by a clock telling to the 
+            processor when to perform a cycle. A cycle a part of an instruction : decoding the 
+            instruction, fetching data from memory, writing to memory and so on. The number 
+            of cycles for an instruction depends on its complexity.</para>
+            <para>The processor can also react to some external signals like reset signal and
+            interrupt request. These signals are usually emitted by peripherals.</para>
+            <para>So, a processor has three interactions with outside world :</para>
+            <itemizedlist>
+                <listitem><para>Memory reading and writing</para></listitem>
+                <listitem><para>Clock cycling request</para></listitem>
+                <listitem><para>Signals</para></listitem>
+            </itemizedlist>
+            <para>In Vinace, processors are represented by classes deriving from 
+            <classname>CProcessor</classname> class.</para>
+            <para>To create a new processor, a child class must be created and the following
+            methods have to be implemented :</para>
+            <para><emphasis>Constructor</emphasis>: the 
+            <classname>CProcessor</classname> constructor takes two parameters : the 
+            memory to be linked to the processor and a number of signals. The child class 
+            constructor should call the <classname>CProcessor</classname> constructor with
+            a given number of signals. This is the number of different possible signals. For
+            example, for a processor having only a reset signal, this number is 1.</para>
+            <para><methodname>reset()</methodname>: this method is supposed to reset
+            the processor state. It is called once when the processor is instantiated. It is the
+            child class responsibility to connect any reset signal to this method.</para>
+            <para><methodname>process_instruction()</methodname>: this method is
+            supposed to process the next instruction. It is called by 
+            <methodname>cycle()</methodname> once the cycles of the previous instruction
+            have been finished. <methodname>process_instruction()</methodname> should
+            increase the <varname>cycles</varname> member of the amount of cycles 
+            corresponding to the instruction.</para>
+            <para><methodname>process_signals()</methodname>: this method is supposed
+            to process signals. It is called by <methodname>cycle()</methodname>. It 
+            should return false if a signal has been processed and true if there was no signal 
+            to process. In that case, <methodname>cycle()</methodname> calls then
+            <methodname>process_instruction</methodname>.</para>
+        </chapter>
+        <chapter lang="en"><title>Memory</title>
+            <para>A memory is a component capable of been read and written.</para>
+            <para>In Vinace, the class that represents memory is <classname>CMemory</classname>. A
+            <classname>CMemory</classname> object does not have to actually remind anything. For example,
+            <classname>CDummyMemory</classname>, a child class of <classname>CMemory</classname>, is a memory that
+            returns dummy values. It is used for filling areas that are not connected to any memory.</para>
+            <para>RAM and ROM are represented by <classname>CMemory</classname> child classes <classname>CRamMemory</classname> and
+            <classname>CRomMemory</classname>.</para>
+            <section><title>Memory proxies</title>
+                <para>Memory proxies, represented by <classname>CMemoryProxy</classname> class, are
+                proxies that allow to address a part of a <classname>CMemory</classname> object. Actually, they only
+                translate the address according to the start address of the target.</para>
+            </section>
+            <section><title>Memory buses</title>
+                <para>Memory buses are <classname>CMemory</classname> childs that dispatch the read and write requests
+                to sub-memories according to requested address or flags from a
+                <classname>CUnit</classname>. There is no common class for memory buses as they do
+                not have anything in common, except that they are memories.</para>
+            </section>
+            <section><title>Apple //e memory</title>
+                <para>Here is the schema of a 64K Apple //e memory.</para>
+                <figure><title>Apple //e memory buses</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="memorybus.png" format="PNG"/>
+                        </imageobject>
+                        <textobject>
+                            <phrase>Apple //e memory buses</phrase>
+                        </textobject>
+                    </mediaobject>
+                </figure>
+
+                <para>The CPU accesses only the main memory bus. IOU is the I/O Unit.</para>
+                <para>There is one bank of 64K bytes RAM and several ROM banks :</para>
+                <itemizedlist>
+                    <listitem><para>The language card ROM (LC ROM) contains monitor routines and basic
+                    (Applesoft on //e, Integer on ][+). It is visible in the $D000-$FFFF
+                    space.</para></listitem>
+                    <listitem><para>The internal ROM contains additional routines for the //e.</para></listitem>
+                    <listitem><para>The card ROMs are ROMs brought by expansion cards.</para></listitem>
+                </itemizedlist>
+        
+                <para>Here is an explanation of each bus.</para>
+        
+                <section id="BusMainMemory"><title>Main memory bus</title>
+                    <para>This bus is the visible part of the memory (from the processor point of
+                    view). This bus divides memory in four parts :</para>
+                    <itemizedlist>
+                        <listitem><para>$0000-$BFFF is connected to RAM.</para></listitem>
+                        <listitem><para>$C000-$C0FF is connected to the I/O Unit.</para></listitem>
+                        <listitem><para>$C100-$CFFF is connected to the I/O ROM bus (this can be connected to
+                        slots ROM or internal ROM).</para></listitem>
+                        <listitem><para>$D000-$FFFF is connected to the language card bus (usually, main ROM is
+                        visible here).</para></listitem>
+                    </itemizedlist>
+                </section>
+                <section id="BusLanguageCard"><title>Language Card bus</title>
+                    <para>Reference : <emphasis>Apple IIe Technical Reference Manual</emphasis> pages 79 to 83
+                    (PDF pp113-117)</para>
+
+                    <para>Language Card bus is in charge of the upper 12K memory. This space was
+                    originally dedicated to Basic and Monitor ROM in 48K Apple ][. On 64K Apples,
+                    a new possibility was to address RAM in this space. This feature is used to
+                    load alternative languages in memory (like ][+ Integer Basic on a //e).</para>
+
+                    <para>Read and Write can be switched independently. This allows to write into
+                    RAM while ROM is visible. It is quite convenient when setting up the RAM as
+                    many low level routines are in ROM (text display, keyboard input...).</para>
+
+                    <para>As there are 16K available RAM but only a 12K slot, the low 4K
+                    ($D000-$FFFF) can address two banks of RAM. The high 8K are always connected
+                    to the same RAM.</para>
+
+                    <para>This bus is driven by the <link linkend="UnitLanguageCard">Language Card
+                    Unit</link> using <emphasis>LCRAM</emphasis>, <emphasis>LCWRITE</emphasis> and
+                    <emphasis>LCBNK2</emphasis> soft switches.</para>
+
+                    <para>By default (<emphasis>LCRAM</emphasis> is off, <emphasis>LCWRITE</emphasis> off),
+                    the ROM is readable and write requests has no effect.</para>
+
+                    <para>Write requests are forwarded to RAM if <emphasis>LCWRITE</emphasis> is set. If
+                    it is not set, write requests have no effect (like for ROM).</para>
+
+                    <para>Read requests are forwarded to RAM if <emphasis>LCRAM</emphasis> is set and to
+                    ROM if it is not set.</para>
+
+                    <para>High 8K requests ($E000-$FFFF) are connected to highest 8K of RAM
+                    ($E000-$FFFF).</para>
+
+                    <para>Low 4K requests ($D000-$DFFF) are connected to RAM at $D000-$DFFF if
+                    <emphasis>LCBNK2</emphasis> is set or to RAM at $C000-$CFFF if not.</para>
+                </section>
+
+                <section id="BusIoRom"><title>I/O Rom Bus</title>
+                    <para>Apple //e and later models had more than 12k of ROM. To access the rest of
+                    the ROM, the space $C100-$CFFF, usually reserved for peripheral ROM could be
+                    used. A window in $C300-$C3FF, corresponding to the 80 column card, can be
+                    specifically selected.</para>
+
+                    <para>This bus is driven by <link linkend="UnitIoRom">I/O Rom unit</link> using
+                    <emphasis>CXROM</emphasis> and <emphasis>C3ROM</emphasis> switches.</para>
+
+                    <para>If <emphasis>CXROM</emphasis> is on, I/O Rom bus forwards request to the 
+                    <link linkend="BusSlotRom">Slot Rom bus</link> (cards ROMs). If 
+                    <emphasis>CXROM</emphasis> is off, internal ROM is visible.</para>
+
+                    <para>The <emphasis>C3ROM</emphasis> switch allows to see internal ROM in $C300-$C3FF 
+                    space whatever the state of <emphasis>CXROM</emphasis> is. This is use to 
+                    shadow 80 column extension card ROM and use internal routines instead. </para>
+                </section>
+
+                <section id="BusSlotRom"><title>Slot ROM Bus</title>
+                    <para>Each expansion card can have 256 bytes of basic ROM, plus
+                    a 4K ROM expansion. The basic ROM is visible at $Cn00-$CnFF, where n is
+                    the slot number.</para>
+                    <para>Whenever the basic ROM is accessed, the ROM expansion (if any) 
+                    is selected and becomes visible at $C800-$CFFF. $CFFF is also a soft switch
+                    (called CLRROM) that clears the ROM selection.</para>
+                    <para>This is explained in the <emphasis>IIe Reference Manual</emphasis>
+                    page 132.</para>
+                    <para>Slot ROM Bus is in charge of forwarding read requests to the right 
+                    card ROM. Like the <link linkend="UnitSlots">Slots unit</link>, it
+                    has to be informed of card inserting and removal.</para>
+                    <section><title>Inserting and removing cards</title>
+                        <para>The <methodname>insert_card</methodname> method tells the
+                        Slot ROM bus that a card has been inserted :</para>
+                        <programlisting>void CSlotRomBus::insert_card(int slot, CMemory *cardRom, CMemory *cardRomExt)</programlisting>
+                        <para><varname>slot</varname> is the slot number (1-7). 
+                        <varname>cardRom</varname> is  the basic ROM of the card 
+                        and <varname>cardRomExt</varname> is its ROM expansion.</para>
+                        <para>The <methodname>remove_card</methodname> method tells the
+                        Slot ROM bus that a card has been removed :</para>
+                        <programlisting>void CSlotRomBus::remove_card(int slot)</programlisting>
+                        <para><varname>slot</varname> is the slot number (1-7). </para>
+                    </section>
+                </section>
+            </section>
+            <section><title>ROM files</title>
+                <para>ROM image files are required for emulators but they are copyrighted and
+                cannot be distributed freely. A good place to fetch ROM images is the
+                emulators section of the <link linkend="Asimov">Asimov repository</link>.</para>
+
+                <para>Vinace needs internal ROM but also Disk II ROM if a Disk II Controller 
+                is plugged in. Here is a description of ROM files used by Vinace.</para>
+    
+                <section id="RomAppleIIe"><title>apple_iie_rom.zip</title>
+                    <para>Location : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_iie_rom.zip">ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_iie_rom.zip</ulink></para>
+                    <para>Contains only one file : APPLE2E.ROM</para>
+
+                    <table><title>APPLE2E.ROM file map</title>
+                        <tgroup cols="3">
+                            <thead>
+                                <row><entry>From</entry><entry>To</entry><entry>Description</entry></row>
+                            </thead>
+                            <tbody>
+                                <row><entry>0x0000</entry><entry>0x01ff</entry><entry>Empty</entry></row>
+                                <row><entry>0x0200</entry><entry>0x02ff</entry><entry>Unknown, probably a slot 2 peripheral card rom</entry></row>
+                                <row><entry>0x0300</entry><entry>0x05ff</entry><entry>Empty</entry></row>
+                                <row><entry>0x0600</entry><entry>0x06ff</entry><entry>16 Sector Disk II controller card ROM</entry></row>
+                                <row><entry>0x0700</entry><entry>0x0fff</entry><entry>Empty</entry></row>
+                                <row><entry>0x1000</entry><entry>0x3fff</entry><entry>Integer basic ROM ?</entry></row>
+                                <row><entry>0x4000</entry><entry>0x40ff</entry><entry>Empty</entry></row>
+                                <row><entry>0x4100</entry><entry>0x4fff</entry><entry>Internal $C100-$CFFF ROM</entry></row>
+                                <row><entry>0x5000</entry><entry>0x7fff</entry><entry>Main $D000-$FFFF ROM</entry></row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                
+                <section id="RomAppleII"><title>apple_ii_rom.zip</title>
+                    <para>Location : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_iie_rom.zip">ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_ii_rom.zip</ulink></para>
+                    <para>Same as <link linkend="RomAppleIIe">apple_iie_rom.zip</link>.</para>
+                </section>
+
+                <section id="RomAppleIIplus"><title>apple_ii+_rom.zip</title>
+                    <para>Location : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_ii+_rom.zip">ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_ii+_rom.zip</ulink></para>
+                    <para>Contains only one file : APPLE2.ROM</para>
+
+                   <table><title>APPLE2.ROM file map</title>
+                        <tgroup cols="3">
+                            <thead>
+                                <row><entry>From</entry><entry>To</entry><entry>Description</entry></row>
+                            </thead>
+                            <tbody>
+                                <row><entry>0x0000</entry><entry>0x05ff</entry><entry>Empty</entry></row>
+                                <row><entry>0x0600</entry><entry>0x06ff</entry><entry>16 Sector Disk II controller card ROM</entry></row>
+                                <row><entry>0x0700</entry><entry>0x0fff</entry><entry>Empty</entry></row>
+                                <row><entry>0x1000</entry><entry>0x15ff</entry><entry>Empty</entry></row>
+                                <row><entry>0x1600</entry><entry>0x16ff</entry><entry>16 Sector Disk II controller card ROM</entry></row>
+                                <row><entry>0x2000</entry><entry>0x4fff</entry><entry>Main $D000-$FFFF ROM</entry></row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+            </section>
+        </chapter>
+        <chapter lang="en"><title>Input Output</title>
+            <section id="Iou2plus"><title>I/O Unit on ][+</title>
+                <table>
+                    <title>Apple ][+ I/O Unit addresses</title>
+                    <tgroup cols="5">
+                        <thead>
+                            <row><entry>Addr</entry><entry>Name</entry><entry>Access</entry><entry>Description</entry><entry>Unit</entry></row>
+                        </thead>
+                        <tbody>
+                            <row><entry>C000</entry><entry>KBD</entry><entry>R</entry><entry>Last key pressed</entry><entry><link linkend="UnitKeyboard">Keyboard</link></entry></row>
+                            <row><entry>C010</entry><entry>KBDSTRB</entry><entry>RW</entry><entry>Keyboard Strobe</entry><entry><link linkend="UnitKeyboard">Keyboard</link></entry></row>
+                            <row><entry>C020</entry><entry>TAPEOUT</entry><entry>R7</entry><entry>Toggle Cassette Tape Output</entry><entry></entry></row>
+                            <row><entry>C030</entry><entry>SPKR</entry><entry>R</entry><entry>Toggle Speaker</entry><entry><link linkend="UnitSpeaker">Speaker</link></entry></row>
+                            <row><entry>C040</entry><entry>STROBE</entry><entry>R</entry><entry>Game I/O Strobe Output</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C050</entry><entry>TXTCLR</entry><entry>WR</entry><entry>Display Graphics</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C051</entry><entry>TXTSET</entry><entry>WR</entry><entry>Display Text</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C052</entry><entry>MIXCLR</entry><entry>WR</entry><entry>Display Full Screen</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C053</entry><entry>MIXSET</entry><entry>WR</entry><entry>Display Split Screen</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C054</entry><entry>TXTPAGE1</entry><entry>WR</entry><entry>Display Page 1</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C055</entry><entry>TXTPAGE2</entry><entry>WR</entry><entry>Display Page 2 </entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C056</entry><entry>LORES</entry><entry>WR</entry><entry>Display LoRes Graphics</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C057</entry><entry>HIRES</entry><entry>WR</entry><entry>Display HiRes Graphics</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C058</entry><entry>CLRAN0</entry><entry>WR</entry><entry>Annunciator 0 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C059</entry><entry>SETAN0</entry><entry>WR</entry><entry>Annunciator 0 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05A</entry><entry>CLRAN1</entry><entry>WR</entry><entry>Annunciator 1 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05B</entry><entry>SETAN1</entry><entry>WR</entry><entry>Annunciator 1 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05C</entry><entry>CLRAN2</entry><entry>WR</entry><entry>Annunciator 2 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05D</entry><entry>SETAN2</entry><entry>WR</entry><entry>Annunciator 2 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05E</entry><entry>CLRAN3</entry><entry>WR</entry><entry>Annunciator 3 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05F</entry><entry>SETAN3</entry><entry>WR</entry><entry>Annunciator 3 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C060</entry><entry>TAPEIN</entry><entry>R7</entry><entry>Read Cassette Input</entry><entry></entry></row>
+                            <row><entry>C061</entry><entry>PB0</entry><entry>R7</entry><entry>Switch Input 0</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C062</entry><entry>PB1</entry><entry>R7</entry><entry>Switch Input 1</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C063</entry><entry>PB2</entry><entry>R7</entry><entry>Switch Input 2</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C064</entry><entry>PADDL0</entry><entry>R7</entry><entry>Analog Input 0</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C065</entry><entry>PADDL1</entry><entry>R7</entry><entry>Analog Input 1</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C066</entry><entry>PADDL2</entry><entry>R7</entry><entry>Analog Input 2</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C067</entry><entry>PADDL3</entry><entry>R7</entry><entry>Analog Input 3</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C070</entry><entry>PTRIG</entry><entry>R</entry><entry>Analog Input Reset</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C080</entry><entry></entry><entry>R</entry><entry>Read RAM bank 2; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C081</entry><entry></entry><entry>RR</entry><entry>Read ROM; write RAM bank 2</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C082</entry><entry></entry><entry>R</entry><entry>Read ROM; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C083</entry><entry></entry><entry>RR</entry><entry>Read/write RAM bank 2</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C084-C087</entry><entry></entry><entry></entry><entry>Same as C080-C083</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C088</entry><entry></entry><entry>R</entry><entry>Read RAM bank 1; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C089</entry><entry></entry><entry>RR</entry><entry>Read ROM; write RAM bank 1</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C08A</entry><entry></entry><entry>R</entry><entry>Read ROM; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C08B</entry><entry></entry><entry>RR</entry><entry>Read/write RAM bank 1</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C08C-C08F</entry><entry></entry><entry>R</entry><entry>Same as C088-C08B</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C090-C09F</entry><entry></entry><entry></entry><entry>Slot 1 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0A0-C0AF</entry><entry></entry><entry></entry><entry>Slot 2 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0B0-C0BF</entry><entry></entry><entry></entry><entry>Slot 3 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0C0-C0CF</entry><entry></entry><entry></entry><entry>Slot 4 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0D0-C0DF</entry><entry></entry><entry></entry><entry>Slot 5 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0E0-C0EF</entry><entry></entry><entry></entry><entry>Slot 6 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0F0-C0FF</entry><entry></entry><entry></entry><entry>Slot 7 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>R - Read to act or get information, W - Write to act, RR - Read twice to act, R7 - Read information from bit 7</para>
+            </section>
+            <section id="Iou2e"><title>I/O Unit on //e</title>
+                <para>Apple //e I/O unit is based on the Apple ][+ unit except for the TXTPAGE1
+                and TXTPAGE2 addresses which are managed by the AuxMemory unit (which passes
+                requests to the GraphicMode unit). Apple //e I/O unit has a few more soft
+                switches and some more soft switches status.</para>
+                <table>
+                    <title>Apple //e I/O Unit addresses</title>
+                    <tgroup cols="5">
+                        <thead>
+                            <row><entry>Addr</entry><entry>Name</entry><entry>Access</entry><entry>Description</entry><entry>Unit</entry></row>
+                        </thead>
+                        <tbody>
+                            <row><entry>C000</entry><entry>KBD</entry><entry>R</entry><entry>Last key pressed</entry><entry><link linkend="UnitKeyboard">Keyboard</link></entry></row>
+                            <row><entry>C000</entry><entry>80STOREOFF</entry><entry>W</entry><entry>Use $C002-$C005 for Aux Memory</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C001</entry><entry>80STOREON</entry><entry>W</entry><entry>Use PAGE2 for Aux Memory</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C002</entry><entry>RDMAINRAM</entry><entry>W</entry><entry>If 80STORE Off: Read Main Mem $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C003</entry><entry>RDCARDRAM</entry><entry>W</entry><entry>If 80STORE Off: Read Aux Mem $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C004</entry><entry>WRMAINRAM</entry><entry>W</entry><entry>If 80STORE Off: Write Main Mem $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C005</entry><entry>WRCARDRAM</entry><entry>W</entry><entry>If 80STORE Off: Write Aux Mem $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C006</entry><entry>SETSLOTCXROM</entry><entry>W</entry><entry>Peripheral ROM ($C100-$CFFF)</entry><entry><link linkend="UnitIoRom">IoRom</link></entry></row>
+                            <row><entry>C007</entry><entry>SETINTCXROM</entry><entry>W</entry><entry>Internal ROM ($C100-$CFFF)</entry><entry><link linkend="UnitIoRom">IoRom</link></entry></row>
+                            <row><entry>C008</entry><entry>SETSTDZP</entry><entry>W</entry><entry>Main Stack and Zero Page</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C009</entry><entry>SETALTZP</entry><entry>W</entry><entry>Aux Stack and Zero Page</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C00A</entry><entry>SETINTC3ROM</entry><entry>W</entry><entry>ROM in Slot 3</entry><entry><link linkend="UnitIoRom">IoRom</link></entry></row>
+                            <row><entry>C00B</entry><entry>SETSLOTC3ROM</entry><entry>W</entry><entry>ROM in Aux Slot</entry><entry><link linkend="UnitIoRom">IoRom</link></entry></row>
+                            <row><entry>C00C</entry><entry>CLR80VID</entry><entry>W</entry><entry>40 Columns</entry><entry><link linkend="UnitTextMode">TextMode</link></entry></row>
+                            <row><entry>C00D</entry><entry>SET80VID</entry><entry>W</entry><entry>80 Columns</entry><entry><link linkend="UnitTextMode">TextMode</link></entry></row>
+                            <row><entry>C00E</entry><entry>CLRALTCHAR</entry><entry>W</entry><entry>Primary Character Set</entry><entry><link linkend="UnitTextMode">TextMode</link></entry></row>
+                            <row><entry>C00F</entry><entry>SETALTCHAR</entry><entry>W</entry><entry>Alternate Character Set</entry><entry><link linkend="UnitTextMode">TextMode</link></entry></row>
+                            <row><entry>C010</entry><entry>KBDSTRB</entry><entry>RW</entry><entry>Keyboard Strobe</entry><entry><link linkend="UnitKeyboard">Keyboard</link></entry></row>
+                            <row><entry>C011</entry><entry>RDLCBNK2</entry><entry>R7</entry><entry>Status of $D000-DFFF RAM Bank 1 (0) or Bank 2 (1)</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C012</entry><entry>RDLCRAM</entry><entry>R7</entry><entry>Status of $D000-$FFFF ROM (0) or RAM (1)</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C013</entry><entry>RDRAMRD</entry><entry>R7</entry><entry>Status of Main/Aux RAM Reading</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C014</entry><entry>RDRAMWRT</entry><entry>R7</entry><entry>Status of Main/Aux RAM Writing</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C015</entry><entry>RDCXROM</entry><entry>R7</entry><entry>Status of Periph (0) or Internal (1) ROM Access</entry><entry><link linkend="UnitIoRom">IoRom</link></entry></row>
+                            <row><entry>C016</entry><entry>RDALTZP</entry><entry>R7</entry><entry>Status of Main/Aux Stack and Zero Page</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C017</entry><entry>RDC3ROM</entry><entry>R7</entry><entry>Status of Slot 3 (0) or Aux Slot (1) ROM</entry><entry><link linkend="UnitIoRom">IoRom</link></entry></row>
+                            <row><entry>C018</entry><entry>RD80STORE</entry><entry>R7</entry><entry>Status of $C002-$C005/PAGE2 for Aux Mem</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link></entry></row>
+                            <row><entry>C019</entry><entry>RDVBL</entry><entry>R7</entry><entry>Vertical Blanking (1=drawing)</entry><entry></entry></row>
+                            <row><entry>C01A</entry><entry>RDTEXT</entry><entry>R7</entry><entry>Status of Text (1) or Graphics (0)</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C01B</entry><entry>RDMIXED</entry><entry>R7</entry><entry>Status of Full Screen (0) or Mixed Graphics (1)</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C01C</entry><entry>RDPAGE2</entry><entry>R7</entry><entry>Status of Page 1 (0) or Page 2 (1)</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C01D</entry><entry>RDHIRES</entry><entry>R7</entry><entry>Status of LoRes (0) or HiRes (1)</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C01E</entry><entry>RDALTCHAR</entry><entry>R7</entry><entry>Status of Primary/Alternate Character Set</entry><entry><link linkend="UnitTextMode">TextMode</link></entry></row>
+                            <row><entry>C01F</entry><entry>RD80VID</entry><entry>R7</entry><entry>Status of 40/80 Columns</entry><entry><link linkend="UnitTextMode">TextMode</link></entry></row>
+                            <row><entry>C020</entry><entry>TAPEOUT</entry><entry>R7</entry><entry>Toggle Cassette Tape Output</entry><entry></entry></row>
+                            <row><entry>C030</entry><entry>SPKR</entry><entry>R</entry><entry>Toggle Speaker</entry><entry><link linkend="UnitSpeaker">Speaker</link></entry></row>
+                            <row><entry>C040</entry><entry>STROBE</entry><entry>R</entry><entry>Game I/O Strobe Output</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C050</entry><entry>TXTCLR</entry><entry>WR</entry><entry>Display Graphics</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C051</entry><entry>TXTSET</entry><entry>WR</entry><entry>Display Text</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C052</entry><entry>MIXCLR</entry><entry>WR</entry><entry>Display Full Screen</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C053</entry><entry>MIXSET</entry><entry>WR</entry><entry>Display Split Screen</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C054</entry><entry>TXTPAGE1</entry><entry>WR</entry><entry>Display Page 1</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C055</entry><entry>TXTPAGE2</entry><entry>WR</entry><entry>If 80STORE Off: Display Page 2, If 80STORE On: Read/Write Aux Display Mem </entry><entry><link linkend="UnitAuxMemory">AuxMemory</link>, <link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C056</entry><entry>LORES</entry><entry>WR</entry><entry>Display LoRes Graphics</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C057</entry><entry>HIRES</entry><entry>WR</entry><entry>Display HiRes Graphics</entry><entry><link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C058</entry><entry>CLRAN0</entry><entry>WR</entry><entry>Annunciator 0 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C059</entry><entry>SETAN0</entry><entry>WR</entry><entry>Annunciator 0 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05A</entry><entry>CLRAN1</entry><entry>WR</entry><entry>Annunciator 1 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05B</entry><entry>SETAN1</entry><entry>WR</entry><entry>Annunciator 1 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05C</entry><entry>CLRAN2</entry><entry>WR</entry><entry>Annunciator 2 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05D</entry><entry>SETAN2</entry><entry>WR</entry><entry>Annunciator 2 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05E</entry><entry>CLRAN3</entry><entry>WR</entry><entry>Annunciator 3 Off</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C05F</entry><entry>SETAN3</entry><entry>WR</entry><entry>Annunciator 3 On</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C060</entry><entry>TAPEIN</entry><entry>R7</entry><entry>Read Cassette Input</entry><entry></entry></row>
+                            <row><entry>C061</entry><entry>PB0</entry><entry>R7</entry><entry>Switch Input 0 / Open Apple</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C062</entry><entry>PB1</entry><entry>R7</entry><entry>Switch Input 1 / Solid Apple</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C063</entry><entry>PB2</entry><entry>R7</entry><entry>Switch Input 2 / Shift Key (on a few models)</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C064</entry><entry>PADDL0</entry><entry>R7</entry><entry>Analog Input 0</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C065</entry><entry>PADDL1</entry><entry>R7</entry><entry>Analog Input 1</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C066</entry><entry>PADDL2</entry><entry>R7</entry><entry>Analog Input 2</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C067</entry><entry>PADDL3</entry><entry>R7</entry><entry>Analog Input 3</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C070</entry><entry>PTRIG</entry><entry>R</entry><entry>Analog Input Reset</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C073</entry><entry>BANKSEL</entry><entry>W</entry><entry>Memory Bank Select for &gt; 128K</entry><entry></entry></row>
+                            <row><entry>C07F</entry><entry>RDDHIRES</entry><entry>R7</entry><entry>Status of Double HiRes</entry><entry></entry></row>
+                            <row><entry>C080</entry><entry></entry><entry>R</entry><entry>Read RAM bank 2; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C081</entry><entry></entry><entry>RR</entry><entry>Read ROM; write RAM bank 2</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C082</entry><entry></entry><entry>R</entry><entry>Read ROM; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C083</entry><entry></entry><entry>RR</entry><entry>Read/write RAM bank 2</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C084-C087</entry><entry></entry><entry></entry><entry>Same as C080-C083</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C088</entry><entry></entry><entry>R</entry><entry>Read RAM bank 1; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C089</entry><entry></entry><entry>RR</entry><entry>Read ROM; write RAM bank 1</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C08A</entry><entry></entry><entry>R</entry><entry>Read ROM; no write</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C08B</entry><entry></entry><entry>RR</entry><entry>Read/write RAM bank 1</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C08C-C08F</entry><entry></entry><entry>R</entry><entry>Same as C088-C08B</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C090-C09F</entry><entry></entry><entry></entry><entry>Slot 1 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0A0-C0AF</entry><entry></entry><entry></entry><entry>Slot 2 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0B0-C0BF</entry><entry></entry><entry></entry><entry>Slot 3 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0C0-C0CF</entry><entry></entry><entry></entry><entry>Slot 4 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0D0-C0DF</entry><entry></entry><entry></entry><entry>Slot 5 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0E0-C0EF</entry><entry></entry><entry></entry><entry>Slot 6 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                            <row><entry>C0F0-C0FF</entry><entry></entry><entry></entry><entry>Slot 7 addresses</entry><entry><link linkend="UnitSlots">Slots</link></entry></row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>R - Read to act or get information, W - Write to act, RR - Read twice to act, R7 - Read information from bit 7</para>
+            </section>
+            <section id="Units"><title>I/O Units</title>
+                <para>I/O Units are interfaces between Apple memory and the peripherals. In the
+                emulator, it is an interface between core layer and hardware layer.</para>
+
+                <section><title>Unit class</title>
+                    <para>I/O Units are represented by child classes of the <classname>CUnit</classname> class.</para>
+
+                    <para>On the Apple memory side, only two methods are used : <methodname>read</methodname> and <methodname>write</methodname>. This
+                    is much like Memory, except that the addressing is on 8 bits rather than
+                    16.</para>
+
+                    <para>On the peripheral side, there is no specification. Most units only consist of
+                    soft switches. To each switch corresponds a <methodname>get_&lt;switch&gt;</methodname>
+                    method and, if changeable, a <methodname>set_&lt;switch&gt;</methodname> method, where
+                    <methodname>&lt;switch&gt;</methodname> is the switch name in lowercase.</para>
+
+                    <para>Units have a <methodname>reset</methodname> method which is
+                    supposed to reset the unit. It is called both at the unit instantiation and when
+                    the user presses the reset button (this is in the hardware layer).</para>
+
+                    <para>All units are observable and should notify whenever any change occurs.
+                    Hardware layer objects should observe units to be informed of what's
+                    happening.</para>
+                </section>
+
+                <section id="UnitKeyboard"><title>Keyboard</title>
+
+                    <para>Compatibility: All models.</para>
+
+                    <para>This unit is in charge of keyboard. On Apple II computer there was no
+                    keyboard buffer. This unit can only handle one key at once.</para>
+
+                    <section><title>Methods</title>
+
+                        <para><programlisting>void press_key(BYTE key);</programlisting></para>
+
+                        <para>Tells the unit that key is being pressed. Note that if the previous key
+                        has not been read yet, it will be forgotten. The key code must be an Apple
+                        ASCII code.</para>
+
+                        <para><programlisting>void release_key();</programlisting></para>
+
+                        <para>Tells the unit that the pressed key has been released.</para>
+
+                        <para><programlisting>bool key_waiting();</programlisting></para>
+
+                        <para>Tells if there's a key waiting to be read by the Apple. This method could
+                        be very convenient for developing a buffered keyboard or a copy paste tool.</para>
+
+                    </section>
+                
+                    <section><title>Addresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x00</entry><entry>KBD</entry><entry>R</entry><entry>Bits 0-6 : Last key pressed or being pressed. Bit 7 : is set if a key has been pressed since last strobe.</entry></row>
+                                    <row><entry>0x10</entry><entry>KBDSTROBE</entry><entry>RW</entry><entry>Strobes the keyboard. Bits 0-6 : Last key pressed or being pressed. Bit 7 : is set if the key is being pressed.</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitTape"><title>Tape</title>
+                    <para>Compatibility: All models.</para>
+                    <para>Unfortunately this unit is not yet implemented.</para>
+                </section>
+
+                <section id="UnitSpeaker"><title>Speaker</title>
+                    <para>Compatibility: All models.</para>
+                    <para>The Apple speaker is quite basic : it has only two levels. Speaker level
+                    is toggled by accessing to the SPKR soft switch. On the peripheral side, the
+                    current speaker level can be read.</para>
+
+                    <section><title>Switches</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Switch</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>SPKR</entry><entry>Speaker at low level</entry><entry>Speaker at high level</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+
+                    <section><title>Addresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x30</entry><entry>SPKR</entry><entry>RW</entry><entry>Toggle SPKR switch</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitGame"><title>Game</title>
+
+                    <para>Compatibility: All models (maybe except //c).</para>
+
+                    <para>Game unit has three different kinds of devices : Three push buttons, four
+                    annunciators and four analog inputs.</para>
+
+                    <para>Push buttons are connected to the joystick or paddles
+                    buttons. Button 0 is also connected to the open apple keyboard key and button
+                    1 to the closed apple key. On a few //e models, the button 2 is connected to
+                    the shift key.</para>
+
+                    <para>Annunciators are outputs on the game plug, capable of
+                    outputting an two levels signal (they have not been used so much, maybe not at
+                    all).</para>
+
+                    <para>Analogs inputs are connected to the joystick X and Y axis
+                    (usually inputs 0 and 1) or to the paddles. These analog inputs worked by
+                    measuring the discharge time of a capacitor into variable resistance of
+                    paddle or joystick. The unit was only able to trigger the capacitor load and
+                    sense when it was discharged. The time is measured by a program in ROM. </para>
+
+                    <para>It is important to simulate this mechanism as some software implements
+                    their own measuring routine. The difficulty is that it is important to
+                    synchronize the simulator to the clock so the cycle count, seen from the
+                    inside, is correct.</para>
+
+                    <section><title>Switches</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Switch</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>AN0</entry><entry>Annunciator 0 level is low</entry><entry>Annunciator 0 level is high</entry></row>
+                                    <row><entry>AN1</entry><entry>Annunciator 1 level is low</entry><entry>Annunciator 1 level is high</entry></row>
+                                    <row><entry>AN2</entry><entry>Annunciator 2 level is low</entry><entry>Annunciator 2 level is high</entry></row>
+                                    <row><entry>AN3</entry><entry>Annunciator 3 level is low</entry><entry>Annunciator 3 level is high</entry></row>
+                                    <row><entry>PB0</entry><entry>Push button 0 is released</entry><entry>Push button 0 is pressed</entry></row>
+                                    <row><entry>PB1</entry><entry>Push button 1 is released</entry><entry>Push button 1 is pressed</entry></row>
+                                    <row><entry>PB2</entry><entry>Push button 2 is released</entry><entry>Push button 2 is pressed</entry></row>
+                                    <row><entry>PADDL0</entry><entry>Paddle 0 capacitor is empty</entry><entry>Paddle 0 capacitor is loaded</entry></row>
+                                    <row><entry>PADDL1</entry><entry>Paddle 1 capacitor is empty</entry><entry>Paddle 1 capacitor is loaded</entry></row>
+                                    <row><entry>PADDL2</entry><entry>Paddle 2 capacitor is empty</entry><entry>Paddle 2 capacitor is loaded</entry></row>
+                                    <row><entry>PADDL3</entry><entry>Paddle 3 capacitor is empty</entry><entry>Paddle 3 capacitor is loaded</entry></row>
+                                    <row><entry>PTRIG</entry><entry>Paddle capacitors are discharging</entry><entry>Paddle capacitors are loading</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+
+                    <section><title>Addresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x58</entry><entry>CLRAN0</entry><entry>WR</entry><entry>Turn AN0 switch off</entry></row>
+                                    <row><entry>0x59</entry><entry>SETAN0</entry><entry>WR</entry><entry>Turn AN0 switch on</entry></row>
+                                    <row><entry>0x5A</entry><entry>CLRAN1</entry><entry>WR</entry><entry>Turn AN1 switch off</entry></row>
+                                    <row><entry>0x5B</entry><entry>SETAN1</entry><entry>WR</entry><entry>Turn AN1 switch on</entry></row>
+                                    <row><entry>0x5C</entry><entry>CLRAN2</entry><entry>WR</entry><entry>Turn AN2 switch off</entry></row>
+                                    <row><entry>0x5D</entry><entry>SETAN2</entry><entry>WR</entry><entry>Turn AN2 switch on</entry></row>
+                                    <row><entry>0x5E</entry><entry>CLRAN3</entry><entry>WR</entry><entry>Turn AN3 switch off</entry></row>
+                                    <row><entry>0x5F</entry><entry>SETAN3</entry><entry>WR</entry><entry>Turn AN3 switch on</entry></row>
+                                    <row><entry>0x61</entry><entry>PB0</entry><entry>R7</entry><entry>Read PB0 switch state</entry></row>
+                                    <row><entry>0x62</entry><entry>PB1</entry><entry>R7</entry><entry>Read PB1 switch state</entry></row>
+                                    <row><entry>0x63</entry><entry>PB2</entry><entry>R7</entry><entry>Read PB2 switch state</entry></row>
+                                    <row><entry>0x64</entry><entry>PADDL0</entry><entry>R7</entry><entry>Read PADDL0 switch state</entry></row>
+                                    <row><entry>0x65</entry><entry>PADDL1</entry><entry>R7</entry><entry>Read PADDL1 switch state</entry></row>
+                                    <row><entry>0x66</entry><entry>PADDL2</entry><entry>R7</entry><entry>Read PADDL2 switch state</entry></row>
+                                    <row><entry>0x67</entry><entry>PADDL3</entry><entry>R7</entry><entry>Read PADDL3 switch state</entry></row>
+                                    <row><entry>0x70</entry><entry>PTRIG</entry><entry>R</entry><entry>Trigger capacitor discharges*</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                        <para>* : When the capacitor charge is triggered, the PTRIG switch goes true,
+                        observers are notified, then it goes back false (and observers are notified
+                        again). All that in the same clock cycle (actually during the same method
+                        call). This is the way the Game unit informs observers that they should begin
+                        discharge simulation.</para>
+                    </section>
+
+                </section>
+                
+                <section id="UnitGraphicMode"><title>Graphic Mode</title>
+
+                    <para>Compatibility: All models.</para>
+
+                    <para>Reference: <emphasis>Apple IIe Technical Reference Manual</emphasis>
+                    page 29 (PDF p63)</para>
+
+                    <para>This unit takes care of graphic and text modes switching, except the
+                    double hires mode which was implemented later. The Apple ][ has one text mode
+                    and two graphic modes (low resolution and high resolution). A mixed mode
+                    allows to split the screen having 4 lines of text at the bottom and the rest
+                    in graphic mode. Each mode has two pages corresponding to different memory
+                    spaces.</para>
+
+                    <section><title>Switches</title>
+
+                        <informaltable>
+                            <tgroup cols="3"> 
+                                <thead>
+                                    <row><entry>Switch</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>TEXT</entry><entry>Graphic Mode</entry><entry>Text mode</entry></row>
+                                    <row><entry>MIXED</entry><entry>Full screen mode</entry><entry>Split screen mode</entry></row>
+                                    <row><entry>PAGE2</entry><entry>Page 1 displayed</entry><entry>Page 2 displayed</entry></row>
+                                    <row><entry>HIRES</entry><entry>Low resolution </entry><entry>High resolution</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+                    <section><title>Addresses</title>
+
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x50</entry><entry>TXTCLR</entry><entry>RW</entry><entry>Turn TEXT switch off</entry></row>
+                                    <row><entry>0x51</entry><entry>TXTSET</entry><entry>RW</entry><entry>Turn TEXT switch on</entry></row>
+                                    <row><entry>0x52</entry><entry>MIXCLR</entry><entry>RW</entry><entry>Turn MIXED switch off</entry></row>
+                                    <row><entry>0x53</entry><entry>MIXSET</entry><entry>RW</entry><entry>Turn MIXED switch on</entry></row>
+                                    <row><entry>0x54</entry><entry>TXTPAGE1</entry><entry>RW</entry><entry>Turn PAGE2 switch off</entry></row>
+                                    <row><entry>0x55</entry><entry>TXTPAGE2</entry><entry>RW</entry><entry>Turn PAGE2 switch on</entry></row>
+                                    <row><entry>0x56</entry><entry>LORES</entry><entry>RW</entry><entry>Turn HIRES switch off</entry></row>
+                                    <row><entry>0x57</entry><entry>HIRES</entry><entry>RW</entry><entry>Turn HIRES switch on</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                        <para>And, on //e and later, some read addresses were added :</para>
+
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x1A</entry><entry>RDTEXT</entry><entry>R7</entry><entry>Read TEXT switch state</entry></row>
+                                    <row><entry>0x1B</entry><entry>RDMIXED</entry><entry>R7</entry><entry>Read MIXED switch state</entry></row>
+                                    <row><entry>0x1C</entry><entry>RDPAGE2</entry><entry>R7</entry><entry>Read PAGE2 switch state</entry></row>
+                                    <row><entry>0x1D</entry><entry>RDHIRES</entry><entry>R7</entry><entry>Read HIRES switch state</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitSlots"><title>Slots</title>
+                    <para>Compatibility: All models. </para>
+
+                    <para>This units manages the expansion slots of the Apple. It just forwards
+                    read and write requests on the $C090-$C0FF memory space to the 
+                    corresponding card's I/O unit.</para>
+                    
+                    <para>Like <link linkend="BusSlotRom">Slot ROM Bus</link>, this unit
+                    has to be informed when a card is inserted or removed.</para>
+
+                    <section><title>Methods</title>
+                        <programlisting>void insert_card(int slot, CUnit *cardUnit);</programlisting>
+                        <para>Tells the unit that a card has been inserted. <varname>slot</varname>
+                        is the slot number (1-7) and <varname>cardUnit</varname> is the I/O
+                        unit of the expansion card.</para>
+                        <programlisting>void remove_card(int slot);</programlisting>
+                        <para>Tells the unit that a card has been removed. <varname>slot</varname>
+                        is the slot number (1-7).</para>
+                    </section>
+
+                    <section><title>Addresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x90-0x9F</entry><entry></entry><entry>RW</entry><entry>Forwarded to addresses 0x00-0x0F of card in slot 1</entry></row>
+                                    <row><entry>0xA0-0xAF</entry><entry></entry><entry>RW</entry><entry>Forwarded to addresses 0x00-0x0F of card in slot 2</entry></row>
+                                    <row><entry>0xB0-0xBF</entry><entry></entry><entry>RW</entry><entry>Forwarded to addresses 0x00-0x0F of card in slot 3</entry></row>
+                                    <row><entry>0xC0-0xCF</entry><entry></entry><entry>RW</entry><entry>Forwarded to addresses 0x00-0x0F of card in slot 4</entry></row>
+                                    <row><entry>0xD0-0xDF</entry><entry></entry><entry>RW</entry><entry>Forwarded to addresses 0x00-0x0F of card in slot 5</entry></row>
+                                    <row><entry>0xE0-0xEF</entry><entry></entry><entry>RW</entry><entry>Forwarded to addresses 0x00-0x0F of card in slot 6</entry></row>
+                                    <row><entry>0xF0-0xFF</entry><entry></entry><entry>RW</entry><entry>Forwarded to addresses 0x00-0x0F of card in slot 7</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitLanguageCard"><title>Language Card</title>
+
+                    <para>Compatibility: All models (probably not ][).</para>
+
+                    <para>Reference : <emphasis>Apple IIe Technical Reference Manual</emphasis>
+                    pages 79 to 83 (PDF pp113-117)</para>
+
+                    <para>This unit drives the <link linkend="BusLanguageCard">Language Card
+                    Bus</link> using three switches : LCRAM, LCBNK2 and LCWRITE.</para>
+
+                    <para>Only LCRAM and LCBNK2 are visible from inside the Apple. LCWRITE is not
+                    an official name for this switch (I chose this one because I did not found
+                    any name in documentation). </para>
+
+                    <para>To change state of LCWRITE, two read requests must be done on the
+                    appropriate address. A fourth switch is used in Vinace to manage that double
+                    read and is called LCWCHG.</para>
+
+                    <section><title>Switches</title>
+
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Switch</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>LCBNK2</entry><entry>RAM bank 2 is used in $D000-$DFFF</entry><entry>Ram bank 1 is used in $D000-$DFFF</entry></row>
+                                    <row><entry>LCRAM</entry><entry>ROM is read in $D000-$FFFF</entry><entry>RAM is read in $D000-$DFFF</entry></row>
+                                    <row><entry>LCWRITE</entry><entry>No write operation in $D000-$FFFF</entry><entry>RAM is writable in $D000-$FFFF (even if not visible)</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                    <section><title>Addresses</title>
+
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x11</entry><entry>RDLCBNK2</entry><entry>R7</entry><entry>Read LCBNK2 switch state</entry></row>
+                                    <row><entry>0x12</entry><entry>RDLCRAM</entry><entry>R7</entry><entry>Read LCRAM switch state</entry></row>
+                                    <row><entry>0x81</entry><entry></entry><entry>R</entry><entry>Turn LCBNK2 on, LCRAM on, LCWRITE off</entry></row>
+                                    <row><entry>0x81</entry><entry></entry><entry>RR</entry><entry>Turn LCBNK2 on, LCRAM off, LCWRITE on</entry></row>
+                                    <row><entry>0x82</entry><entry></entry><entry>R</entry><entry>Turn LCBNK2 on, LCRAM off, LCWRITE off</entry></row>
+                                    <row><entry>0x83</entry><entry></entry><entry>RR</entry><entry>Turn LCBNK2 on, LCRAM on, LCWRITE on</entry></row>
+                                    <row><entry>0x84-0x87</entry><entry></entry><entry></entry><entry>Same as 0x80-0x83</entry></row>
+                                    <row><entry>0x88</entry><entry></entry><entry>R</entry><entry>Turn LCBNK2 off, LCRAM on, LCWRITE off</entry></row>
+                                    <row><entry>0x89</entry><entry></entry><entry>RR</entry><entry>Turn LCBNK2 off, LCRAM off, LCWRITE on</entry></row>
+                                    <row><entry>0x8A</entry><entry></entry><entry>R</entry><entry>Turn LCBNK2 off, LCRAM off, LCWRITE off</entry></row>
+                                    <row><entry>0x8B</entry><entry></entry><entry>RR</entry><entry>Turn LCBNK2 off, LCRAM on, LCWRITE on</entry></row>
+                                    <row><entry>0x8C-0x8F</entry><entry></entry><entry></entry><entry>Same as 0x88-0x8B</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                </section>
+
+                <section id="UnitAuxMemory"><title>Aux Memory</title>
+                    <para>Compatibility: //e and later.</para>
+                    <para>Unfortunately this unit is not yet implemented.</para>
+                </section>
+
+                <section id="UnitTextMode"><title>Text Mode</title>
+                    <para>Compatibility: //e and later.</para>
+
+                    <para>This unit takes care of 40/80 columns display switching and charset
+                    switching.</para>
+
+                    <section><title>Switches</title>
+
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Switch</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>80VID</entry><entry>40 columns display</entry><entry>80 columns display</entry></row>
+                                    <row><entry>ALTCHAR</entry><entry>Primary charset used</entry><entry>Alternative charset used</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                    <section><title>Addresses</title>
+
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x0C</entry><entry>CLR80VID</entry><entry>W</entry><entry>Turn 80VID switch off</entry></row>
+                                    <row><entry>0x0D</entry><entry>SET80VID</entry><entry>W</entry><entry>Turn 80VID switch on</entry></row>
+                                    <row><entry>0x0E</entry><entry>CLRALTCHAR</entry><entry>W</entry><entry>Turn ALTCHAR switch off</entry></row>
+                                    <row><entry>0x0F</entry><entry>SETALTCHAR</entry><entry>W</entry><entry>Turn ALTCHAR switch on</entry></row>
+                                    <row><entry>0x1E</entry><entry>RDALTCHAR</entry><entry>R7</entry><entry>Read ALTCHAR switch state</entry></row>
+                                    <row><entry>0x1F</entry><entry>RD80VID</entry><entry>R7</entry><entry>Read 80VID switch state</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                </section>
+
+                <section id="UnitIoRom"><title>I/O Rom</title>
+                    <para>Compatibility : //e, IIgs</para>
+
+                    <para>Some Apple models had more than 12k of ROM. To access the rest of the ROM,
+                    the space $C100-$CFFF, usually reserved for peripheral ROM could be used. A
+                    window in $C300-$C3FF, corresponding to the 80 column card, can be
+                    specifically selected.</para>
+
+                    <para>This unit drives the <link linkend="BusIoRom">I/O Rom bus</link> that takes care of $C100-$CFFF ROM switching between slot
+                    ROM and internal ROM.</para>
+
+                    <section><title>Switches</title>
+
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Switch</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>CXROM</entry><entry>Peripheral ROM at $C100-$CFFF</entry><entry>Internal ROM at $C100-$CFFF</entry></row>
+                                    <row><entry>C3ROM</entry><entry>ROM selected by CXROM at $C300-$C3FF</entry><entry>Internal ROM at $C300-$C3FF</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                    <section><title>Addresses</title>
+
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Address</entry><entry>Name</entry><entry>Access</entry><entry>Effect</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x06</entry><entry>SETSLOTCXROM</entry><entry>W</entry><entry>Turn CXROM switch off</entry></row>
+                                    <row><entry>0x07</entry><entry>SETINTCXROM</entry><entry>W</entry><entry>Turn CXROM switch on</entry></row>
+                                    <row><entry>0x0A</entry><entry>SETINTC3ROM</entry><entry>W</entry><entry>Turn C3ROM switch off</entry></row>
+                                    <row><entry>0x0B</entry><entry>SETSLOTC3ROM</entry><entry>W</entry><entry>Turn C3ROM switch on</entry></row>
+                                    <row><entry>0x15</entry><entry>RDCXROM</entry><entry>R7</entry><entry>Read CXROM switch state</entry></row>
+                                    <row><entry>0x17</entry><entry>RDC3ROM</entry><entry>R7</entry><entry>Read C3ROM switch state</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+
+                </section>
+            </section>
+        </chapter>
+        <chapter lang="en"><title>Not yet implemented</title>
+            <para>Here is a list of features to be implemented:</para>
+            <itemizedlist>
+                <listitem><para>Tape input and output</para></listitem>
+                <listitem><para>128K memory (AuxMemory)</para></listitem>
+                <listitem><para>Vertical blanking signal</para></listitem>
+                <listitem><para>Reading floppy in ProDOS order format (.po) and in nibbles format (.nib)</para></listitem>
+                <listitem><para>Floppy disk writing</para></listitem>
+            </itemizedlist>
+            <para>Some other features could also be implemented but they are less important :</para>
+            <itemizedlist>
+                <listitem><para>A 'paste' capable keyboard</para></listitem>
+                <listitem><para>Sounds for disk drives</para></listitem>
+            </itemizedlist>
+        </chapter>
+        <chapter lang="en"><title>References</title>
+            <section><title>On the web</title>
+                <section id="Asimov"><title>Asimov</title>
+                    <para>Asimov repository is <emphasis>the</emphasis> place to go on internet to find apple
+                    stuff. There are disk images, original documentation, ROM images, emulators
+                    and so on.</para>
+                    <para>Asimov repository is here : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II">
+                    ftp://ftp.apple.asimov.net/pub/apple_II</ulink></para>
+                </section>
+                <section><title>Jon Relay's Apple II Info Archives</title>
+                    <para>Jon Relay's Apple II Info Archives contains useful stuff that can also be
+                    found in reference manuals, except for the fabulous I/O Memory page that
+                    summarizes input/output of all Apple II models in one big table :</para>
+                    <para><ulink url="http://www.kreativekorp.com/miscpages/a2info/iomemory.shtml">http://www.kreativekorp.com/miscpages/a2info/iomemory.shtml</ulink></para>
+                </section>
+            </section>
+            <section><title>Books</title>
+                <para>These are the most interesting books, they can all be found on 
+                <link linkend="Asimov">Asimov repository</link>. Reading these books, you
+                can notice how much times have changed if you compare them to the 
+                information you can get, even as a developer, from hardware constructors.
+                These books gives you an amazing amount of information : electronic schemas,
+                ROM listings, specifications...</para>
+                <section><title>Apple IIe Technical Reference Manual</title>
+                    <para>This is the bible. Almost every thing is explained. I have the French
+                    version. The English original version can be found there :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple%20IIe%20Technical%20Reference%20Manual.pdf">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple IIe Technical Reference Manual.pdf</ulink></para>
+                </section>
+                <section><title>Apple II Reference Manual January 1978</title>
+                    <para>This is an older bible. It is also known as <emphasis>the red book</emphasis>.
+                    Fortunately I got one from ebay. A PDF version can be found there :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple_II_Redbook.pdf">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple_II_Redbook.pdf</ulink></para>
+                </section>
+                <section><title>Understanding the Apple II</title>
+                    <para>I read the chapter 8, about the Disk II Controller, as official
+                    Apple manual does not provide any information on it. I haven't read the
+                    rest of this book (I have no paper version) but it looks very interesting and 
+                    goes deep in Apple II description. A PDF version can be found there :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/documentation/understanding%20the%20apple%20ii.pdf">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/documentation/understanding the apple ii.pdf</ulink></para>
+                </section>
+            </section>
+            <section><title>Existing emulators</title>
+                <section><title>YAE - Yet Another Apple Emulator</title>
+                    <para>Before I decided to write Vinace, I have been using YAE. It has a lot of
+                    limitations : no simple joystick emulation, no easy disk drive interface.</para>
+                    <para>I first tried to improve it but I quickly found out that writing a new 
+                    emulator from scratch would not be harder.</para>
+                    <para>I studied a lot the source code from YAE while writing Vinace. I took
+                    the routines for nibble encoding and decoding, used in disk drives, from it.
+                    The files <emphasis>gcr.h</emphasis> and <emphasis>gcr.cpp</emphasis>
+                    are nearly the same that in YAE.</para>
+                    <para>It seems that the YAE website does not exists anymore 
+                    (<ulink url="http://quark.netfront.net:6502/">http://quark.netfront.net:6502/</ulink>)
+                    but source code can still be found on Asimov Repository here :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/yae/yae-0.1.tar.gz">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/emulators/yae/yae-0.1.tar.gz</ulink></para>
+                </section>
+            </section>
+                <section><title>Appleblossom - Portable Open-Source Apple IIe Emulator</title>
+                    <para>When I couldn't find answers neither in documentation nor in YAE
+                    source, I searched in Apple Blossom source code.</para>
+                    <para>I took charset code from Apple Blossom. It is now in the 
+                    <emphasis>CCharset.cpp</emphasis> file.</para>
+                    <para>Source code of Apple Blossom is here :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/appleblossom/appleblossom.zip">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/emulators/appleblossom/appleblossom.zip</ulink></para>
+                </section>
+        </chapter>
+    </part>
+</book>

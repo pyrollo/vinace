@@ -1,0 +1,1131 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<book lang="fr">
+    <title>Documentation Vinace</title>
+       <chapter lang="fr"><title>Introduction</title>
+        <para>Vinace est pour VINtage Apple Computer Emulator. Pour l'instant ce n'est
+        qu'un émulateur d'Apple //e 64Ko. Il devrait pouvoir facilement évoluer vers un
+        émulateur d'Apple ][ tout modèle.</para>
+        <para>Ce document comporte deux parties. La partie <emphasis>Utiliser Vinace</emphasis>
+        explique comment utiliser Vinace et la partie <emphasis>A l'intérieur de Vinace</emphasis>
+        parle du fonctionnement de Vinace.</para>
+        <para>Ce document est encore en cours d'écriture, ce n'est pas une version finale.
+        Beaucoup d'informations peuvent manquer.</para>
+    </chapter>
+    <part><title>Utiliser Vinace</title>
+        <chapter lang="fr"><title>Démarrage rapide</title>
+            <para>Si vous êtes pressé, voici les instructions pour utiliser Vinace.</para>
+            <para>Pour démarrer Vinace, lancez simplement <emphasis>vinace</emphasis>
+            depuis l'intérieur de son répertoire.</para>
+            <para>Pour que l'Apple arrête de lire depuis le disque, pressez <emphasis>Ctrl
+            - Pause</emphasis>. Pour redémarrer l'Apple, pressez simultanément 
+            <emphasis>Alt gauche - Ctrl - Pause</emphasis>.</para>
+            <para>Pour insérer un disque, glissez un fichier d'image disque sur le lecteur
+            de disquette.</para>
+        </chapter>
+        <chapter lang="fr"><title>Clavier</title>
+            <para>Voici les touches du clavier original de l'Apple //e :</para>
+            <table>
+                <title>Touches du clavier de l'Apple //e</title>
+                <tgroup cols="2">
+                    <thead>
+                        <row><entry>Groupe</entry><entry>Touches</entry></row>
+                    </thead>
+                    <tbody>
+                        <row><entry>Lettres</entry><entry>A à Z (majuscules, minuscules et contrôle)</entry></row>
+                        <row><entry>Nombres</entry><entry>0 à 9</entry></row>
+                        <row><entry>Symbols</entry><entry>! @ # $ % ^ & * ( ) - _ + = { } [ ] : ; " ' ~ `| \  &lt; &gt; , . ? /</entry></row>
+                        <row><entry>Autres touches</entry><entry>Esc, Tab, Retour, Del, Flèches (gauche, droite, bas, haut)</entry></row>
+                        <row><entry>Touches spéciales</entry><entry>Reset, Pomme ouverte, Pomme pleine</entry></row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <para>Le clavier virtuel de l'Apple est associé au clavier de votre ordinateur.
+            Les lettres (majuscules, minuscules et contrôles), les nombres, les symboles et les
+            autres touches sont directement connectés au touches correspondantes.</para>
+            <para>Les touches <emphasis>Pomme ouverte</emphasis> et <emphasis>
+            Pomme pleine</emphasis> sont connectées aux touches <emphasis>Alt 
+            gauche</emphasis> et <emphasis>Alt droite</emphasis>.</para>
+            <para>La combinaison de touches <emphasis>Ctrl - Reset</emphasis> est 
+            connectée à la combinaison <emphasis>Ctrl - Pause</emphasis> (la touche
+            <emphasis>Reset</emphasis> seule n'a aucun effet sur le clavier de l'Apple).</para>
+            <para>Ceci signifie que, si vous voulez redémarrer l'Apple //e, vous devez
+            presser <emphasis>Alt gauche - Ctrl - Pause</emphasis> là où, sur le clavier
+            original, vous pressiez <emphasis>Pomme ouverte - Ctrl - Reset</emphasis>.</para>
+        </chapter>
+        <chapter lang="fr"><title>Joystick</title>
+            <para>Dans Vinace, il y a une émulation d'un joystick simple, utilisant le pavé
+            numérique. En réalité, le joystick de l'Apple est capable de détecter 256 positions
+            sur chaque axe. Le joystick Vinace n'est capable de simuler que trois positions
+            sur chaque axe (0, 128 et 255). Ceci doit convenir pour la plupart des jeux mais
+            ne sera pas suffisant pour ceux faisant un usage précis du joystick.</para>
+            <para>La touche "5" du pavé numérique est la position centrale. La touche "8" 
+            est pour le haut, la touche "2" pour le bas, la touche "4" pour la gauche et la "6" 
+            pour la droite. Les touches en diagonale (7, 9, 1 et 3) fonctionnent aussi.</para>
+            <figure><title>Emulation du joystick par le pavé numérique</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="numpad-joystick.png" format="PNG"/>
+                    </imageobject>
+                    <textobject>
+                        <phrase>L'émulation du joystick par le pavé numérique : comment
+                        les touches sont liées aux positions du joystick.</phrase>
+                    </textobject>
+                </mediaobject>
+            </figure>
+            <para>Il n'y a pas encore d'émulation des boutons, la touche <emphasis>Alt
+            gauche</emphasis> doit donc être utilisée pour le bouton 0 et <emphasis>Alt
+            droite</emphasis> pour le bouton 1.</para>
+        </chapter>
+        <chapter lang="fr"><title>Disquettes et lecteurs</title>
+            <para>Les lecteurs de disquette dans Vinace sont faciles à utiliser.</para>
+            <para>Pour ouvrir ou fermer le lecteur, cliquez simplement sur le fermoir.</para>
+            <para>Pour insérer une disquette dans un lecteur, glissez le fichier image disque
+            sur le lecteur. En cas de succès, le nom de la disquette va apparaître sur le lecteur
+            et il se refermera automatiquement.</para>
+            <para>Seuls les fichiers <emphasis>.dsk</emphasis> (Images disque en ordre
+            DOS) sont supportés pour l'instant. D'autres formats (images disque en ordre ProDOS,
+            images nibbles) seront supportés plus tard.</para>
+            <para>L'écriture sur disque n'est pas encore implémentée.</para>
+            <para>Des images disque peuvent être trouvées sur le dépôt Asimov, dans la 
+            section Images ici : </para>
+            <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/images/">
+            ftp://ftp.apple.asimov.net/pub/apple_II/images/</ulink></para>
+        </chapter>
+    </part>
+    <part><title>A l'intérieur de Vinace</title>
+        <chapter lang="fr"><title>Principes généraux</title>
+            <para>Avant d'aller plus profond dans Vinace, voici, en tant qu'introduction, 
+            quelques principes généraux.</para>
+            <section><title>Pourquoi un nouvel émulateur ?</title>
+                <para>Les émulateurs existant ont une interface graphiques vieille et peu pratique 
+                (pas d'utilisation de la souris, ligne de commande pour changer de disquette).</para>
+                <para>Les émulateurs existants sont écrits pour être performants et pas pour être
+                compréhensibles ou modulaires.</para>
+                <para>Les émulateurs existants sont monolithiques, pas assez proche du matériel original
+                et pas très facile à faire évoluer.</para>
+                <para>Je souhaitais développer un projet pas trop difficile pour me remettre au C++.</para>
+            </section>
+            <section><title>Qu'est-ce qu'un ordinateur ?</title>
+                <para>Fondamentalement, un ordinateur c'est un processeur (CPU), de la mémoire, et des périphériques.</para>
+                <para>Le processeur est le composant central de l'ordinateur. Il récupère des données depuis la mémoire,
+                il les traite et remet le résultat dans la mémoire. </para>
+                <para>Le processeur peut recevoir des signaux, comme le signal de remise à zéro (reset) ou les interruptions.
+                Il reçoit aussi un signal périodique de l'horloge lui indiquant quand un cycle doit être effectué (une instruction
+                est "faite" de plusieurs cycles).</para>
+                <para>A part les signaux, la seule communication entre le processeur et le reste du monde s'effectue
+                via la mémoire. Comme différent types de mémoire sont disponibles (RAM, ROM, etc.), un bus mémoire est
+                chargé d'interfacer le processeur avec ces différent types. Selon l'adresse demandée par le processeur,
+                le bus transfert la requête à la mémoire correspondante.</para>
+                <para>Pour piloter les périphériques, le processeur utilise la mémoire (une fois encore, c'est la seule
+                porte vers le monde extérieur). Un type de mémoire spécifique, l'unité d'entrée sortie (IOU), est connectée
+                au bus mémoire. L'unité d'entrée sortie n'est pas réellement une mémoire puisqu'elle ne stocke pas
+                d'information. Quand une adresse est accédée dans l'IOU, cela active quelque chose dans un périphérique
+                ou lit une information en provenance de ce périphérique. Par exemple, l'accès à l'adresse 15 peut activer
+                une lumière, ou bien l'accès à l'adresse 17 peut lire l'état d'un bouton. C'est en gros comme ça que le
+                processeur interagit avec les périphériques.</para>
+                <para>Si nous mettons tout cela ensemble, nous obtenons un schéma "simple" de ce qu'est un ordinateur :</para>
+                <figure><title>Un ordinateur simplifié</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="simple.png" format="PNG"/>
+                        </imageobject>
+                        <textobject>
+                            <phrase>Un ordinateur simplifié : un processeur (CPU), un bus mémoire, de la RAM, de la ROM et une unité d'entrée sortie (IOU).</phrase>
+                        </textobject>
+                    </mediaobject>
+                </figure>
+                <para>Le rectangle orage, contenant le processeur, la mémoire et l'unité d'entrée sortie mais 
+                ni les périphériques, ni l'horloge, représente ce que j'ai appelé le "noyau" (core). Le noyau
+                est la partie minimale pour que l'ordinateur fonctionne. Les périphériques ne font que connecter
+                l'ordinateur au monde et, en particulier, à l'utilisateur, mais ils ne sont pas indispensables.
+                J'ai mis l'horloge en dehors car je considère l'horloge comme une interface entre l'ordinateur et
+                le temps réel. On peut modifier la fréquence de l'horloge sans affecter le comportement de 
+                l'ordinateur. On peut même utiliser une horloge manuelle pour étudier l'ordinateur pas à pas.</para>
+            </section>
+            
+            <section><title>Le modèle d'émulateur à trois couches</title>
+                <para>Je voulais avoir un émulateur modulaire qui soit flexible pour lequel il
+                soit facile de développer de nouvelles fonctionnalités. Je voulais aussi quelque chose
+                qui soit très près de la réalité. Par exemple, je voulais être capable de développer
+                un nouveau périphérique que je pourrais "brancher" dans mon émulateur, de la même façon
+                que l'on branche des périphériques dans une machine.</para>
+                <para>J'ai décidé d'utiliser un modèle à trois couches. Voici ces trois couches dans un schéma :</para>
+
+                <figure><title>Le modèle à trois couches</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="layers.png" format="PNG"/>
+                        </imageobject>
+                        <textobject>
+                            <phrase>Le modèle à trois couches</phrase>
+                        </textobject>
+                    </mediaobject>
+                </figure>
+
+                <section><title>Couche noyau</title>
+                    <para>La couche noyau (core) contient tous les composants, et seulement eux,
+                    nécessaires pour avoir un ordinateur qui fonctionne. Cela signifie que l'on
+                    peut instancier un noyau seul et jouer avec lui. C'est intéressant dans un
+                    but d'étude mais cela donne un ordinateur sourd et aveugle. Le noyau peut
+                    être vu comme l'ordinateur vu depuis l'intérieur de lui même (dans cette
+                    couche, les programmes tournent comme s'ils étaient dans un ordinateur
+                    réel).</para>
+                </section>
+                <section><title>Couche matériel</title>
+                    <para>La couche matériel (hardware) est la représentation logicielle
+                    de l'ordinateur émulé. Cette représentation est indépendante de l'interface
+                    graphique. Par exemple, la sortie vidéo est représentée par une matrice de
+                    pixels et le bouton d'un joystick par un simple booléen.</para>
+                    <para>Cette couche doit contenir la représentation de tous les objets du
+                    monde émulé, comme les disquettes ou les cartouches. Elle doit aussi contenir
+                    toute la logique de l'émulateur de façon à ce que la couche suivante ne soit
+                    en charge que de l'interface homme machine.</para>
+                </section>
+                <section><title>Couche IHM</title>
+                    <para>La couche Interface Homme-Machine (GUI) est chargée de représenter à
+                    l'utilisateur la couche matériel.</para>
+                </section>
+            </section>
+        </chapter>
+
+        <chapter lang="fr"><title>Processeur</title>
+            <para>Le processeur est un dispositif capable d'exécuter une séquence d'instructions
+            stockées en mémoire. Ces instructions peuvent nécessiter l'usage de registres (petit
+            morceaux de mémoire interne). Elles peuvent aussi nécessiter la lecture et l'écriture
+            en mémoire.</para>
+            <para>La périodicité de l'exécution des instruction est controllée par une horloge
+            indiquant au processeur quand il doit effectuer un cycle. Un cycle est une partie
+            d'instruction : décodage de l'instruction, récupération des données depuis la mémoire,
+            écriture en mémoire, etc. Le nombre de cycles pour une instruction dépend de sa
+            complexité.</para>
+            <para>Le processeur peut aussi réagir à certains signaux externes comme le
+            signal de remise à zéro (reset) et les demandes d'interruption. Ces signaux sont
+            habituellement émis par les périphériques.</para>
+            <para>Donc, un processeur a trois types d'interaction avec le monde extérieur :</para>
+            <itemizedlist>
+                <listitem><para>Lecture et écriture en mémoire</para></listitem>
+                <listitem><para>Requête de cycle par l'horloge</para></listitem>
+                <listitem><para>Signaux</para></listitem>
+            </itemizedlist>
+            <para>Dans Vinace, les processeur sont représentés par des classes héritant de
+            la classe <classname>CProcessor</classname>.</para>
+            <para>Pour créer un nouveau processeur, une classe enfant doit être créée et les
+            méthodes suivantes doivent être implémentées :</para>
+            <para><emphasis>Constructeur</emphasis>: le constructeur de
+            <classname>CProcessor</classname> prend deux paramètre : la mémoire qui
+            doit être liée au processeur et un nombre de signaux. Le constructeur de la classe
+            enfant doit appeler celui de <classname>CProcessor</classname> avec un
+            nombre donnée de signaux. C'est le nombre de signaux possibles différents. Par
+            exemple, pour un processeur n'ayant que le signal de remise à zéro, ce nombre
+            est 1.</para>
+            <para><methodname>reset()</methodname>: cette méthode est censée
+            remettre l'état du processeur à zéro. Elle est appelée une fois lorsque le processeur
+            est instancié. C'est à la classe enfant de connecter le signal de remise à zéro à cette
+            méthode.</para>
+            <para><methodname>process_instruction()</methodname>: cette méthode
+            est censée traiter l'instruction suivante. Elle est appelée par
+            <methodname>cycle()</methodname> une fois les cycles de l'instruction
+            précédente terminés. <methodname>process_instruction()</methodname> 
+            doit augmenter le membre <varname>cycles</varname> du bon nombre de
+            cycles correspondant à l'instruction.</para>
+            <para><methodname>process_signals()</methodname>: Cette méthode est
+            censée traiter les signaux. Elle est appelée par
+            <methodname>cycle()</methodname>. Elle doit renvoyer faux si un signal
+            a été traité et vrai s'il n'y avait pas de signal à traiter. Dans ce cas,
+            <methodname>cycle()</methodname> appelle alors
+            <methodname>process_instruction</methodname>.</para>
+        </chapter>
+        <chapter lang="fr"><title>Mémoire</title>
+            <para>Une mémoire est un composant capable d'être lu et écrit.</para>
+            <para>Dans Vinace, la classe qui représente la mémoire est <classname>CMemory</classname>. Un objet
+            <classname>CMemory</classname> n'a pas à retenir quoi que ce soit en réalité. Par exemple,
+            <classname>CDummyMemory</classname>, une classe enfant de <classname>CMemory</classname>, est une mémoire qui
+            renvoie des valeurs bidon. Elle est utilisée pour remplir les espaces mémoire non connectés.</para>
+            <para>La RAM et la ROM sont représentées par les classes <classname>CRamMemory</classname> et
+            <classname>CRomMemory</classname>, enfants de <classname>CMemory</classname>.</para>
+
+            <section><title>Proxys mémoire</title>
+                <para>Les proxys mémoire, représentés par la classe <classname>CMemoryProxy</classname>, sont des
+                proxys qui permettent d'adresser une partie d'un objet <classname>CMemory</classname>. En réalité, ils ne font
+                que décaler l'adresse selon l'adresse de départ de la cible.</para>
+            </section>
+            <section><title>Bus mémoire</title>
+                <para>Les bus mémoire sont des enfants de <classname>CMemory</classname> qui dispatchent les requêtes de lecture et d'écriture
+                vers des sous-mémoire selon l'adresse de la requête ou selon des drapeaux d'un objet
+                <classname>CUnit</classname>. Il n'y a pas de classe commune pour les bus mémoire car
+                ils n'ont rien de spécifique en commun, à part le fait qu'ils soient des mémoires.</para>
+            </section>
+            <section><title>La mémoire de l'Apple //e</title>
+                <para>Voici un schéma de la mémoire d'un Apple //e 64Ko.</para>
+                <figure><title>Bus mémoire de l'Apple //e</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="memorybus.png" format="PNG"/>
+                        </imageobject>
+                        <textobject>
+                            <phrase>Bus mémoire de l'Apple //e</phrase>
+                        </textobject>
+                    </mediaobject>
+                </figure>
+
+                <para>Le processeur accède seulement au bus mémoire principal (main memory bus). l'IOU est l'unité d'entrée/sortie.</para>
+                <para>Il y a un banc de 64Ko de RAM et plusieurs bancs de ROM :</para>
+                <itemizedlist>
+                    <listitem><para>La ROM de la carte language (LC ROM) contient les routines moniteur et celles du basic
+                    (Applesoft sur le //e, Integer sur le ][+). Elle est visible dans l'espace $D000-$FFFF.</para></listitem>
+                    <listitem><para>La ROM interne contient des routines additionnelles pour le //e.</para></listitem>
+                    <listitem><para>Les ROM des cartes périphériques (card ROM) sont les ROMs des cartes d'extension.</para></listitem>
+                </itemizedlist>
+        
+                <para>Voici une explication de chacun des bus.</para>
+        
+                <section id="BusMainMemory"><title>Bus mémoire principal (Main memory bus)</title>
+                    <para>Ce bus est la partie visible de la mémoire (depuis le point de vue du processeur).
+                    Ce bus divise la mémoire en quatre parties :</para>
+                    <itemizedlist>
+                        <listitem><para>$0000-$BFFF est connecté à la RAM.</para></listitem>
+                        <listitem><para>$C000-$C0FF est connecté à l'unité d'entrée sortie (IOU).</para></listitem>
+                        <listitem><para>$C100-$CFFF est connecté au bus de la ROM E/S (peut être connecté à la ROM des
+                        cartes périphériques ou bien à la ROM interne).</para></listitem>
+                        <listitem><para>$D000-$FFFF est connecté au bus de la carte langage (habituellement, la ROM principale est visible ici).</para></listitem>
+                    </itemizedlist>
+                </section>
+                <section id="BusLanguageCard"><title>Bus de la carte language (Language Card bus)</title>
+                    <para>Référence : <emphasis>Apple IIe Technical Reference Manual</emphasis> pages 79 to 83
+                    (PDF pp113-117)</para>
+
+                    <para>Le bus de la carte langage est en charge des 12Ko les plus hauts de la mémoire. Cet espace était
+                    originellement dédié à la ROM Basic et moniteur dans les Apple ][ 48Ko. Sur les Apples 64Ko,
+                    une nouvelle possibilité était d'adresser de la RAM dans cet espace. Cette fonctionnalité est utilisé pour
+                    charger des langages alternatifs en mémoire (comme le basic Integer du ][+ sur un //e).</para>
+
+                    <para>La lecture et l'écriture peuvent être modifiés indépendamment. Ceci permet d'écrire en 
+                    RAM pendant que la ROM est visible. C'est particulièrement pratique lorsque l'on prépare la RAM car
+                    bien des routines bas niveau sont en ROM (affichage du texte, lecture du clavier...).</para>
+
+                    <para>Comme 16Ko de RAM sont disponibles mais l'espace ne fait que 12Ko, les 4Ko inférieurs 
+                    ($D000-$FFFF) peuvent adresser deux bancs de RAM. Les 8Ko supérieurs sont toujours connectés
+                    à la même RAM.</para>
+
+                    <para>Ce bus est piloté par l'<link linkend="UnitLanguageCard">Unité de carte langage</link>
+                    en utilisant les interrupteurs logiciels <emphasis>LCRAM</emphasis>, <emphasis>LCWRITE</emphasis> et
+                    <emphasis>LCBNK2</emphasis>.</para>
+
+                    <para>Par défaut (<emphasis>LCRAM</emphasis> et <emphasis>LCWRITE</emphasis> sur off),
+                    la ROM est lisible et les écritures n'ont aucun effet.</para>
+
+                    <para>Les requêtes d'écriture sont transmises à la RAM si <emphasis>LCWRITE</emphasis> est actif. Sinon,
+                    les requête d'écriture n'ont pas d'effet (comme pour une ROM).</para>
+
+                    <para>Les requêtes de lecture sont transmises à la RAM si <emphasis>LCRAM</emphasis> est actif et 
+                    à la ROM sinon.</para>
+
+                    <para>Les 8Ko supérieurs ($E000-$FFFF) sont connectés aux 8Ko supérieurs de la RAM
+                    ($E000-$FFFF).</para>
+
+                    <para>Les 4Ko inférieurs ($D000-$DFFF) sont connectés à la RAM en $D000-$DFFF si
+                    <emphasis>LCBNK2</emphasis> est actif ou à celle en $C000-$CFFF sinon.</para>
+                </section>
+
+                <section id="BusIoRom"><title>Bus de la ROM E/S (I/O Rom Bus)</title>
+                    <para>L'Apple //e et les modèles suivants ont plus que 12Ko de ROM. Pour accéder au reste de 
+                    la ROM, l'espace $C100-$CFFF, habituellement réserver aux ROM des cartes périphériques peut
+                    être utilisé. Une fenêtre, en $C300-$C3FF, correspondant à la carte 80 colonnes, peut être
+                    sélectionnée spécifiquement.</para>
+
+                    <para>Ce bus est piloté par l'<link linkend="UnitIoRom">unité de ROM E/S</link> en utilisant
+                    les interrupteurs logiciels <emphasis>CXROM</emphasis> et <emphasis>C3ROM</emphasis>.</para>
+
+                    <para>Si <emphasis>CXROM</emphasis> est actif, les requêtes sont transmises au 
+                    <link linkend="BusSlotRom">bus des ROM périphériques</link>. Si
+                    <emphasis>CXROM</emphasis> est actif, la ROM interne est visible.</para>
+
+                    <para><emphasis>C3ROM</emphasis> permet de voir la ROM interne en $C300-$C3FF 
+                    quelque soit l'état de <emphasis>CXROM</emphasis>. Ceci est utilisé pour masquer 
+                    la ROM de la carte d'extension 80 colonnes et pour utiliser les routines internes à la place. </para>
+                </section>
+
+                <section id="BusSlotRom"><title>Bus des ROM périphériques (Slot ROM Bus)</title>
+                    <para>Chaque carte d'extension peut avoir 256 octets de ROM basique
+                    plus une extension ROM de 4Ko. La ROM basique est visible en $Cn00-$CnFF,
+                    où n est le numéro du port.</para>
+                    <para>Lorsque la ROM basique est lue, l'extension ROM (s'il y en a une)
+                    est sélectionnée et devient visible en $C800-$CFFF. $CFFF est aussi un
+                    interrupteur logiciel (nommée CLRROM) qui désélectionne la ROM.</para>
+                    <para>Ceci est expliqué dans le <emphasis>Apple IIe Technical Reference Manual</emphasis>
+                    page 132.</para>
+                    <para>Le bus des ROM périphériques est en charge de transférer les requêtes
+                    de lecture à la bonne ROM. Comme l'<link linkend="UnitSlots">unité des ports d'extension</link>,
+                    il doit être informé des insertions et retraits de cartes.</para>
+                    <section><title>Insérer et retirer des cartes</title>
+                        <para>La méthode <methodname>insert_card</methodname> indique
+                        au bus qu'une carte a été insérée :</para>
+                        <programlisting>void CSlotRomBus::insert_card(int slot, CMemory *cardRom, CMemory *cardRomExt)</programlisting>
+                        <para><varname>slot</varname> est le numéro du port (1-7). 
+                        <varname>cardRom</varname> est la ROM basique de la carte et
+                        <varname>cardRomExt</varname> est sont extension.</para>
+                        <para>La méthode <methodname>remove_card</methodname> indique
+                        au bus qu'une carde a été retirée :</para>
+                        <programlisting>void CSlotRomBus::remove_card(int slot)</programlisting>
+                        <para><varname>slot</varname> est le numéro du port (1-7). </para>
+                    </section>
+                </section>
+            </section>
+            <section><title>Fichiers de ROM</title>
+                <para>Les fichiers d'image des ROM sont nécessaire aux émulateurs mais ils 
+                sont sous copyright et ne peuvent être distribués librement. Un bon endroit
+                pour récupérer des images de ROM est la section émulateurs du 
+                <link linkend="Asimov">dépôt Asimov</link>.</para>
+
+                <para>Vinace a besoin des ROM internes ainsi que de la ROM du Disk II
+                si un contrôleur Disk II est branché. Voici une description des fichiers de ROM
+                utilisés par Vinace.</para>
+    
+                <section id="RomAppleIIe"><title>apple_iie_rom.zip</title>
+                    <para>Emplacement : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_iie_rom.zip">ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_iie_rom.zip</ulink></para>
+                    <para>Contient un seul fichier : APPLE2E.ROM</para>
+
+                    <table><title>Carte du fichier APPLE2E.ROM</title>
+                        <tgroup cols="3">
+                            <thead>
+                                <row><entry>De</entry><entry>À</entry><entry>Description</entry></row>
+                            </thead>
+                            <tbody>
+                                <row><entry>0x0000</entry><entry>0x01ff</entry><entry>Vide</entry></row>
+                                <row><entry>0x0200</entry><entry>0x02ff</entry><entry>Inconnu, probablement la ROM d'un périphérique en port 2</entry></row>
+                                <row><entry>0x0300</entry><entry>0x05ff</entry><entry>Vide</entry></row>
+                                <row><entry>0x0600</entry><entry>0x06ff</entry><entry>ROM 16 secteurs du contrôleur Disk II</entry></row>
+                                <row><entry>0x0700</entry><entry>0x0fff</entry><entry>Vide</entry></row>
+                                <row><entry>0x1000</entry><entry>0x3fff</entry><entry>ROM de l'Integer Basic ?</entry></row>
+                                <row><entry>0x4000</entry><entry>0x40ff</entry><entry>Vide</entry></row>
+                                <row><entry>0x4100</entry><entry>0x4fff</entry><entry>ROM interne $C100-$CFFF</entry></row>
+                                <row><entry>0x5000</entry><entry>0x7fff</entry><entry>ROM principale $D000-$FFFF ROM</entry></row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                
+                <section id="RomAppleII"><title>apple_ii_rom.zip</title>
+                    <para>Emplacement : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_iie_rom.zip">ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_ii_rom.zip</ulink></para>
+                    <para>Identique à <link linkend="RomAppleIIe">apple_iie_rom.zip</link>.</para>
+                </section>
+
+                <section id="RomAppleIIplus"><title>apple_ii+_rom.zip</title>
+                    <para>Emplacement : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_ii+_rom.zip">ftp://ftp.apple.asimov.net/pub/apple_II/emulators/rom_images/apple_ii+_rom.zip</ulink></para>
+                    <para>Contient un seul fichier : APPLE2.ROM</para>
+
+                   <table><title>Carte du fichier APPLE2.ROM</title>
+                        <tgroup cols="3">
+                            <thead>
+                                <row><entry>De</entry><entry>À</entry><entry>Description</entry></row>
+                            </thead>
+                            <tbody>
+                                <row><entry>0x0000</entry><entry>0x05ff</entry><entry>Vide</entry></row>
+                                <row><entry>0x0600</entry><entry>0x06ff</entry><entry>ROM 16 secteurs du contrôleur Disk II</entry></row>
+                                <row><entry>0x0700</entry><entry>0x0fff</entry><entry>Vide</entry></row>
+                                <row><entry>0x1000</entry><entry>0x15ff</entry><entry>Vide</entry></row>
+                                <row><entry>0x1600</entry><entry>0x16ff</entry><entry>ROM 16 secteurs du contrôleur Disk II</entry></row>
+                                <row><entry>0x2000</entry><entry>0x4fff</entry><entry>ROM principale $D000-$FFFF ROM</entry></row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+            </section>
+        </chapter>
+        <chapter lang="fr"><title>Entrées / Sorties</title>
+            <section id="Iou2plus"><title>L'unité d'entrées/sorties du ][+</title>
+                <table>
+                    <title>Adresses de l'unité d'entrées/sorties de l'Apple ][+</title>
+                    <tgroup cols="5">
+                        <thead>
+                            <row><entry>Adr</entry><entry>Nom</entry><entry>Accès</entry><entry>Description</entry><entry>Unité</entry></row>
+                        </thead>
+                        <tbody>
+                            <row><entry>C000</entry><entry>KBD</entry><entry>R</entry><entry>Dernière touche pressée</entry><entry><link linkend="UnitKeyboard">Clavier</link></entry></row>
+                            <row><entry>C010</entry><entry>KBDSTRB</entry><entry>RW</entry><entry>Remise à zéro du clavier</entry><entry><link linkend="UnitKeyboard">Clavier</link></entry></row>
+                            <row><entry>C020</entry><entry>TAPEOUT</entry><entry>R7</entry><entry>Bascule la sortie cassette</entry><entry><link linkend="UnitTape">Cassette</link></entry></row>
+                            <row><entry>C030</entry><entry>SPKR</entry><entry>R</entry><entry>Bascule l'état du haut parleur</entry><entry><link linkend="UnitSpeaker">Haut parleur</link></entry></row>
+                            <row><entry>C040</entry><entry>STROBE</entry><entry>R</entry><entry>Envoie une impulsion sur la sortie jeux</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C050</entry><entry>TXTCLR</entry><entry>WR</entry><entry>Mode graphique</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C051</entry><entry>TXTSET</entry><entry>WR</entry><entry>Mode texte</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C052</entry><entry>MIXCLR</entry><entry>WR</entry><entry>Mode plein écran</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C053</entry><entry>MIXSET</entry><entry>WR</entry><entry>Mode mixte</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C054</entry><entry>TXTPAGE1</entry><entry>WR</entry><entry>Affiche la page 1</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C055</entry><entry>TXTPAGE2</entry><entry>WR</entry><entry>Affiche la page 2</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C056</entry><entry>LORES</entry><entry>WR</entry><entry>Graphiques basse résolution</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C057</entry><entry>HIRES</entry><entry>WR</entry><entry>Graphiques haute résolution</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C058</entry><entry>CLRAN0</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 0</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C059</entry><entry>SETAN0</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 0</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05A</entry><entry>CLRAN1</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 1</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05B</entry><entry>SETAN1</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 1</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05C</entry><entry>CLRAN2</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 2</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05D</entry><entry>SETAN2</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 2</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05E</entry><entry>CLRAN3</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 3</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05F</entry><entry>SETAN3</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 3</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C060</entry><entry>TAPEIN</entry><entry>R7</entry><entry>Lit l'état de l'entrée cassette</entry><entry><link linkend="UnitTape">Cassette</link></entry></row>
+                            <row><entry>C061</entry><entry>PB0</entry><entry>R7</entry><entry>Bouton poussoir 0</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C062</entry><entry>PB1</entry><entry>R7</entry><entry>Bouton poussoir 1</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C063</entry><entry>PB2</entry><entry>R7</entry><entry>Bouton poussoir 2</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C064</entry><entry>PADDL0</entry><entry>R7</entry><entry>Lit l'entrée analogique 0</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C065</entry><entry>PADDL1</entry><entry>R7</entry><entry>Lit l'entrée analogique 1</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C066</entry><entry>PADDL2</entry><entry>R7</entry><entry>Lit l'entrée analogique 2</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C067</entry><entry>PADDL3</entry><entry>R7</entry><entry>Lit l'entrée analogique 3</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C070</entry><entry>PTRIG</entry><entry>R</entry><entry>Remise à zéro des entrées analogiques</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C080</entry><entry></entry><entry>R</entry><entry>Lecture de la RAM page 2, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C081</entry><entry></entry><entry>RR</entry><entry>Lecture de la ROM, écriture de la RAM page 2</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C082</entry><entry></entry><entry>R</entry><entry>Lecture de la ROM, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C083</entry><entry></entry><entry>RR</entry><entry>Lecture et écriture en RAM page 2</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C084-C087</entry><entry></entry><entry></entry><entry>Identique à C080-C083</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C088</entry><entry></entry><entry>R</entry><entry>Lecture de la RAM page 1, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C089</entry><entry></entry><entry>RR</entry><entry>Lecture de la ROM, écriture de la RAM page 1</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C08A</entry><entry></entry><entry>R</entry><entry>Lecture de la ROM, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C08B</entry><entry></entry><entry>RR</entry><entry>Lecture et écriture en RAM page 1</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C08C-C08F</entry><entry></entry><entry>R</entry><entry>Identique à C088-C08B</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C090-C09F</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 1</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0A0-C0AF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 2</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0B0-C0BF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 3</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0C0-C0CF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 4</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0D0-C0DF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 5</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0E0-C0EF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 6</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0F0-C0FF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 7</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>R - Lire pour agir ou récupérer l'information, W - Écrire pour agir, RR - Lire deux fois pour agir, R7 - Lire l'information dans le bit 7</para>
+            </section>
+            <section id="Iou2e"><title>L'unité d'entrées/sorties du //e</title>
+                <para>L'unité d'entrées/sorties de l'Apple //e est basée sur celle de l'Apple ][+, sauf pour les adresses TXTPAGE1
+                et TXTPAGE2 qui sont gérées par l'unité AuxMemory (qui passe la requête à l'unité GraphicMode). 
+                L'unité d'entrées/sorties de l'Apple //e I/O possède quelques interrupteurs logiciels supplémentaires ainsi que
+                des accès à l'état des interrupteurs existants.</para>
+                <table>
+                    <title>Adresses de l'unité d'entrées/sorties de l'Apple //e</title>
+                    <tgroup cols="5">
+                        <thead>
+                            <row><entry>Adr</entry><entry>Nom</entry><entry>Accès</entry><entry>Description</entry><entry>Unité</entry></row>
+                        </thead>
+                        <tbody>
+                            <row><entry>C000</entry><entry>KBD</entry><entry>R</entry><entry>Dernière touche pressée</entry><entry><link linkend="UnitKeyboard">Clavier</link></entry></row>
+                            <row><entry>C000</entry><entry>80STOREOFF</entry><entry>W</entry><entry>Utilise $C002-$C005 pour la mémoire auxiliaire</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C001</entry><entry>80STOREON</entry><entry>W</entry><entry>Utilise PAGE2 pour la mémoire auxiliaire</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C002</entry><entry>RDMAINRAM</entry><entry>W</entry><entry>Si 80STORE est à 0: Lit la mémoire principale en $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C003</entry><entry>RDCARDRAM</entry><entry>W</entry><entry>Si 80STORE est à 0: Lit la mémoire auxiliaire en $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C004</entry><entry>WRMAINRAM</entry><entry>W</entry><entry>Si 80STORE est à 0: Écrit la mémoire principale en $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C005</entry><entry>WRCARDRAM</entry><entry>W</entry><entry>Si 80STORE est à 0:  Écrit la mémoire principale en $0200-$BFFF</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C006</entry><entry>SETSLOTCXROM</entry><entry>W</entry><entry>ROM des périphériques ($C100-$CFFF)</entry><entry><link linkend="UnitIoRom">Rom E/S</link></entry></row>
+                            <row><entry>C007</entry><entry>SETINTCXROM</entry><entry>W</entry><entry>ROM interne ($C100-$CFFF)</entry><entry><link linkend="UnitIoRom">Rom E/S</link></entry></row>
+                            <row><entry>C008</entry><entry>SETSTDZP</entry><entry>W</entry><entry>Pile et page zéro principales</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C009</entry><entry>SETALTZP</entry><entry>W</entry><entry>Pile et page zéro auxiliaires</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C00A</entry><entry>SETINTC3ROM</entry><entry>W</entry><entry>ROM interne en $C300-$C3FF</entry><entry><link linkend="UnitIoRom">Rom E/S</link></entry></row>
+                            <row><entry>C00B</entry><entry>SETSLOTC3ROM</entry><entry>W</entry><entry>ROM des périphériques $C300-$C3FF</entry><entry><link linkend="UnitIoRom">Rom E/S</link></entry></row>
+                            <row><entry>C00C</entry><entry>CLR80VID</entry><entry>W</entry><entry>40 Colonnes</entry><entry><link linkend="UnitTextMode">Mode texte</link></entry></row>
+                            <row><entry>C00D</entry><entry>SET80VID</entry><entry>W</entry><entry>80 Colonnes</entry><entry><link linkend="UnitTextMode">Mode texte</link></entry></row>
+                            <row><entry>C00E</entry><entry>CLRALTCHAR</entry><entry>W</entry><entry>Sélectionne la police de caractère primaire</entry><entry><link linkend="UnitTextMode">Mode texte</link></entry></row>
+                            <row><entry>C00F</entry><entry>SETALTCHAR</entry><entry>W</entry><entry>Sélectionne la police de caractère alternative</entry><entry><link linkend="UnitTextMode">Mode texte</link></entry></row>
+                            <row><entry>C010</entry><entry>KBDSTRB</entry><entry>RW</entry><entry>Remise à zéro du clavier</entry><entry><link linkend="UnitKeyboard">Clavier</link></entry></row>
+                            <row><entry>C011</entry><entry>RDLCBNK2</entry><entry>R7</entry><entry>État de visibilité de la page 1 (0) ou de la page 2 (1) de RAM en $D000-DFFF </entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C012</entry><entry>RDLCRAM</entry><entry>R7</entry><entry>État de visibilité de la ROM (0) our de la RAM() en $D000-$FFFF</entry><entry><link linkend="UnitLanguageCard">LanguageCard</link></entry></row>
+                            <row><entry>C013</entry><entry>RDRAMRD</entry><entry>R7</entry><entry>État de lecture de la RAM principale/auxiliaire</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C014</entry><entry>RDRAMWRT</entry><entry>R7</entry><entry>État d'écriture dans la RAM principale/auxiliaire</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C015</entry><entry>RDCXROM</entry><entry>R7</entry><entry>État de l'accès à la ROM des périphériques (0) ou interne (1)</entry><entry><link linkend="UnitIoRom">Rom E/S</link></entry></row>
+                            <row><entry>C016</entry><entry>RDALTZP</entry><entry>R7</entry><entry>État de la pile et de la page zéro principale ou auxiliaire</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C017</entry><entry>RDC3ROM</entry><entry>R7</entry><entry>État de la ROM visible en $C300-$C3FF : Port 3 (0) ou Port auxiliaire (1)</entry><entry><link linkend="UnitIoRom">Rom E/S</link></entry></row>
+                            <row><entry>C018</entry><entry>RD80STORE</entry><entry>R7</entry><entry>État de 80STOREOFF</entry><entry><link linkend="UnitAuxMemory">Mémoire auxiliaire</link></entry></row>
+                            <row><entry>C019</entry><entry>RDVBL</entry><entry>R7</entry><entry>État de l'effacement vertical (1=en cours d'affichage)</entry><entry></entry></row>
+                            <row><entry>C01A</entry><entry>RDTEXT</entry><entry>R7</entry><entry>État du mode Texte (1) ou Graphique (0)</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C01B</entry><entry>RDMIXED</entry><entry>R7</entry><entry>État du mode plein écran (0) ou mode mixte (1)</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C01C</entry><entry>RDPAGE2</entry><entry>R7</entry><entry>État de l'affichage de la page 1 (0) ou page 2 (1)</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C01D</entry><entry>RDHIRES</entry><entry>R7</entry><entry>État de la résolution basse (0) ou haute (1)</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C01E</entry><entry>RDALTCHAR</entry><entry>R7</entry><entry>État de la police de caractère primaire ou alternative</entry><entry><link linkend="UnitTextMode">Mode texte</link></entry></row>
+                            <row><entry>C01F</entry><entry>RD80VID</entry><entry>R7</entry><entry>État de l'affichage 40 ou 80 colonnes</entry><entry><link linkend="UnitTextMode">Mode texte</link></entry></row>
+                            <row><entry>C020</entry><entry>TAPEOUT</entry><entry>R7</entry><entry>Bascule la sortie cassette</entry><entry><link linkend="UnitTape">Cassette</link></entry></row>
+                            <row><entry>C030</entry><entry>SPKR</entry><entry>R</entry><entry>Bascule l'état du haut parleur</entry><entry><link linkend="UnitSpeaker">Speaker</link></entry></row>
+                            <row><entry>C040</entry><entry>STROBE</entry><entry>R</entry><entry>Envoie une impulsion sur la sortie jeux</entry><entry><link linkend="UnitGame">Game</link></entry></row>
+                            <row><entry>C050</entry><entry>TXTCLR</entry><entry>WR</entry><entry>Mode graphique</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C051</entry><entry>TXTSET</entry><entry>WR</entry><entry>Mode texte</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C052</entry><entry>MIXCLR</entry><entry>WR</entry><entry>Mode plein écran</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C053</entry><entry>MIXSET</entry><entry>WR</entry><entry>Mode mixte</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C054</entry><entry>TXTPAGE1</entry><entry>WR</entry><entry>Affiche la page 1</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C055</entry><entry>TXTPAGE2</entry><entry>WR</entry><entry>Si 80STORE est à 0: Affiche la page 2, Si 80STORE est à un: Écriture/Lecture de la mémoire auxiliaire d'affichage</entry><entry><link linkend="UnitAuxMemory">AuxMemory</link>, <link linkend="UnitGraphicMode">GraphicMode</link></entry></row>
+                            <row><entry>C056</entry><entry>LORES</entry><entry>WR</entry><entry>Graphiques basse résolution</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C057</entry><entry>HIRES</entry><entry>WR</entry><entry>Graphiques haute résolution</entry><entry><link linkend="UnitGraphicMode">Mode graphique</link></entry></row>
+                            <row><entry>C058</entry><entry>CLRAN0</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 0</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C059</entry><entry>SETAN0</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 0</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05A</entry><entry>CLRAN1</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 1</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05B</entry><entry>SETAN1</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 1</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05C</entry><entry>CLRAN2</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 2</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05D</entry><entry>SETAN2</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 2</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05E</entry><entry>CLRAN3</entry><entry>WR</entry><entry>Mise à 0 de l'annonciateur 3</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C05F</entry><entry>SETAN3</entry><entry>WR</entry><entry>Mise à 1 de l'annonciateur 3</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C060</entry><entry>TAPEIN</entry><entry>R7</entry><entry>Lit l'état de l'entrée cassette</entry><entry><link linkend="UnitTape">Cassette</link></entry></row>
+                            <row><entry>C061</entry><entry>PB0</entry><entry>R7</entry><entry>Bouton poussoir 0 / Touche Pomme Ouverte</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C062</entry><entry>PB1</entry><entry>R7</entry><entry>Bouton poussoir 1 / Touche Pomme Pleine</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C063</entry><entry>PB2</entry><entry>R7</entry><entry>Bouton poussoir 2 / Touche Shift (sur certains modèles)</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C064</entry><entry>PADDL0</entry><entry>R7</entry><entry>Lit l'entrée analogique 0</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C065</entry><entry>PADDL1</entry><entry>R7</entry><entry>Lit l'entrée analogique 1</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C066</entry><entry>PADDL2</entry><entry>R7</entry><entry>Lit l'entrée analogique 2</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C067</entry><entry>PADDL3</entry><entry>R7</entry><entry>Lit l'entrée analogique 3</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C070</entry><entry>PTRIG</entry><entry>R</entry><entry>Remise à zéro des entrées analogiques</entry><entry><link linkend="UnitGame">Jeu</link></entry></row>
+                            <row><entry>C073</entry><entry>BANKSEL</entry><entry>W</entry><entry>Sélection du banc de mémoire si plus de 128K</entry><entry></entry></row>
+                            <row><entry>C07F</entry><entry>RDDHIRES</entry><entry>R7</entry><entry>État du graphique en Double Haute Résolution</entry><entry></entry></row>
+                            <row><entry>C080</entry><entry></entry><entry>R</entry><entry>Lecture de la RAM page 2, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C081</entry><entry></entry><entry>RR</entry><entry>Lecture de la ROM, écriture de la RAM page 2</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C082</entry><entry></entry><entry>R</entry><entry>Lecture de la ROM, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C083</entry><entry></entry><entry>RR</entry><entry>Lecture et écriture en RAM page 2</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C084-C087</entry><entry></entry><entry></entry><entry>Identique à C080-C083</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C088</entry><entry></entry><entry>R</entry><entry>Lecture de la RAM page 1, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C089</entry><entry></entry><entry>RR</entry><entry>Lecture de la ROM, écriture de la RAM page 1</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C08A</entry><entry></entry><entry>R</entry><entry>Lecture de la ROM, pas d'écriture</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C08B</entry><entry></entry><entry>RR</entry><entry>Lecture et écriture en RAM page 1</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C08C-C08F</entry><entry></entry><entry>R</entry><entry>Identique à C088-C08B</entry><entry><link linkend="UnitLanguageCard">Carte langage</link></entry></row>
+                            <row><entry>C090-C09F</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 1</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0A0-C0AF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 2</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0B0-C0BF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 3</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0C0-C0CF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 4</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0D0-C0DF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 5</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0E0-C0EF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 6</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                            <row><entry>C0F0-C0FF</entry><entry></entry><entry></entry><entry>Adresses pour le port d'extension 7</entry><entry><link linkend="UnitSlots">Ports d'extension</link></entry></row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>R - Lire pour agir ou récupérer l'information, W - Écrire pour agir, RR - Lire deux fois pour agir, R7 - Lire l'information dans le bit 7</para>
+            </section>
+            <section id="Units"><title>Unités d'entrées/sorties</title>
+                <para>Les unités d'E/S sont des interfaces entre la mémoire de l'Apple et les périphériques.
+                Dans l'émulateur, c'est une interface entre les couches noyau et matériel.</para>
+
+                <section><title>Classe unité</title>
+                    <para>Les unités sont représentés par des classes descendantes de la classe <classname>CUnit</classname>.</para>
+
+                    <para>Du côté mémoire de l'Apple, seules deux méthodes sont utilisées : <methodname>read</methodname> (lecture) et <methodname>write</methodname> (ecriture).
+                    C'est à peu près la même chose que pour une mémoire excepté que l'adressage est en 8 bits au lieu de 16.</para>
+
+                    <para>Du côté périphérique, il n'y a pas de spécification. La plupart des 
+                    unités ne comportent que des interrupteurs logiciels. A chaque interrupteur 
+                    correspoind une méthode
+                    <methodname>get_&lt;switch&gt;</methodname> et, si modifiable, une 
+                    méthode <methodname>set_&lt;switch&gt;</methodname>, où
+                    <methodname>&lt;switch&gt;</methodname> est le nom de l'interrupteur
+                    en minuscules.</para>
+
+                    <para>Les unités ont une méthode <methodname>reset</methodname>
+                    qui est censée remettre à zéro l'unité. Elle est appelée à l'instanciation de
+                    l'unité mais aussi lorsque l'utilisateur appuie sur le bouton "reset" (ça c'est
+                    dans la couche matériel).</para>
+
+                    <para>Toutes les unités sont observables et doivent notifier de tout changement
+                    pouvant subvenir. Les objets de la couche matériel doivent observer les unités pour
+                    être informés de ce qu'il se produit.</para>
+                </section>
+
+                <section id="UnitKeyboard"><title>Clavier (Keyboard)</title>
+                   <para>Compatibilité : Tous modèles.</para>
+
+                    <para>Cette unité est en charge du clavier. Sur les Apple II, il n'y avait
+                    pas de tampon clavier. Cette unité ne peut donc gérer qu'une touche à la fois.</para>
+
+                    <section><title>Méthodes</title>
+
+                        <para><programlisting>void press_key(BYTE key);</programlisting></para>
+
+                        <para>Indique à l'unité quelle touche est en train d'être pressée. Notez que
+                        si la touche précédente n'a pas encore été lue, elle sera oubliée. Les codes
+                        de touche doivent être en code ASCII Apple.</para>
+
+                        <para><programlisting>void release_key();</programlisting></para>
+
+                        <para>Indique à l'unité que la touche a été relâchée.</para>
+
+                        <para><programlisting>bool key_waiting();</programlisting></para>
+
+                        <para>Indique s'il y a une touche en attende de lecture par l'Apple. Cette
+                        méthode peut être particulièrement utile pour développer un tampon clavier
+                        ou un outil de copier coller.</para>
+
+                    </section>
+                
+                    <section><title>Addresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x00</entry><entry>KBD</entry><entry>R</entry><entry>Bits 0-6 : Dernière touche pressée ou en train de l'être. Bit 7 : est à 1 si une touche a été pressée depuis la dernière remise à zéro.</entry></row>
+                                    <row><entry>0x10</entry><entry>KBDSTROBE</entry><entry>RW</entry><entry>Remet à zéro le clavier. Bits 0-6 : Dernière touche pressée ou en train de l'être. Bit 7 : à 1 si une touche est enfoncée.</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitTape"><title>Cassette (Tape)</title>
+                    <para>Compatibilité : Tous modèles.</para>
+                    <para>Malheureusement cette unité n'est pas encore implémentée.</para>
+                </section>
+
+                <section id="UnitSpeaker"><title>Haut parleur (Speaker)</title>
+                    <para>Compatibilité : Tous modèles.</para>
+                    <para>Le haut parleur de l'Apple est plutôt basique : il n'a que deux niveau.
+                    Le niveau du haut parleur est inversé en accédant à l'interrupteur logiciel SPKR.
+                    Du côté périphérique, le niveau du haut parleur peut être lu.</para>
+
+                    <section><title>Interrupteurs</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Interrupteur</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>SPKR</entry><entry>Haut parleur au niveau bas</entry><entry>Haut parleur au niveau haut</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+
+                    <section><title>Adresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x30</entry><entry>SPKR</entry><entry>RW</entry><entry>Change l'état de SPKR</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitGame"><title>Jeu (Game)</title>
+                    <para>Compatibilité : Tous modèles (sauf peut être le //c).</para>
+
+                    <para>L'unité de jeu possède trois sortes de dispositif : Trois boutons poussoirs,
+                    quatre annonciateurs et quatre entrées analogiques.</para>
+
+                    <para>Les boutons poussoirs sont connectés à ceux du joystick ou des paddles. 
+                    A partir du //e, le bouton 0 est aussi connecté à la touche du clavier Pomme 
+                    Ouverte et le bouton 1 à la touche Pomme Pleine. Sur certains modèles de //e, 
+                    le bouton 2 était connecté à la touche Shift.</para>
+
+                    <para>Les annonciateurs sont des sorties sur la prise jeu, capable de sortir à
+                    deux niveaux (ils n'ont pas été beaucoup utilisé, peut être pas du tout).</para>
+
+                    <para>Les entrées analogiques sont connectées aux axes X et Y du joystick
+                    (habituellement, les entrées 0 et 1) ou aux paddles. Ces entrées analogiques
+                    fonctionnaient en mesurant le temps de décharge d'un condensateur dans le
+                    potentiomètre du joystick ou de la paddle. L'unité n'est capable que de déclencher
+                    la charge du condensateur et de détecter lorsqu'il est déchargé. La mesure de 
+                    temps est effectuée par un programme en ROM.</para>
+
+                    <para>Il est important de simuler ce mécanisme car certains programmes 
+                    implémentent leur propre routine de mesure. La difficulté est qu'il est important
+                    de synchroniser le simulateur à l'horloge pour que le décompte de cycles, vu 
+                    depuis l'intérieur, soit correct.</para>
+
+                    <section><title>Interrupteurs</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Interrupteur</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>AN0</entry><entry>Annonciateur 0 au niveau bas</entry><entry>Annonciateur 0 au niveau haut</entry></row>
+                                    <row><entry>AN1</entry><entry>Annonciateur 1 au niveau bas</entry><entry>Annonciateur 1 au niveau haut</entry></row>
+                                    <row><entry>AN2</entry><entry>Annonciateur 2 au niveau bas</entry><entry>Annonciateur 2 au niveau haut</entry></row>
+                                    <row><entry>AN3</entry><entry>Annonciateur 3 au niveau bas</entry><entry>Annonciateur 3 au niveau haut</entry></row>
+                                    <row><entry>PB0</entry><entry>Bouton 0 relâché</entry><entry>Bouton 0 appuyé</entry></row>
+                                    <row><entry>PB1</entry><entry>Bouton 1 relâché</entry><entry>Bouton 1 appuyé</entry></row>
+                                    <row><entry>PB2</entry><entry>Bouton 2 relâché</entry><entry>Bouton 2 appuyé</entry></row>
+                                    <row><entry>PADDL0</entry><entry>Condensateur de l'entrée 0 déchargé</entry><entry>Condensateur de l'entrée 0 chargé</entry></row>
+                                    <row><entry>PADDL1</entry><entry>Condensateur de l'entrée 1 déchargé</entry><entry>Condensateur de l'entrée 1 chargé</entry></row>
+                                    <row><entry>PADDL2</entry><entry>Condensateur de l'entrée 2 déchargé</entry><entry>Condensateur de l'entrée 2 chargé</entry></row>
+                                    <row><entry>PADDL3</entry><entry>Condensateur de l'entrée 3 déchargé</entry><entry>Condensateur de l'entrée 3 chargé</entry></row>
+                                    <row><entry>PTRIG</entry><entry>Les condensateurs sont en décharge</entry><entry>Les condensateurs sont en charge</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+
+                    <section><title>Adresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x58</entry><entry>CLRAN0</entry><entry>WR</entry><entry>Éteint AN0</entry></row>
+                                    <row><entry>0x59</entry><entry>SETAN0</entry><entry>WR</entry><entry>Allume AN0</entry></row>
+                                    <row><entry>0x5A</entry><entry>CLRAN1</entry><entry>WR</entry><entry>Éteint AN1</entry></row>
+                                    <row><entry>0x5B</entry><entry>SETAN1</entry><entry>WR</entry><entry>Allume AN1</entry></row>
+                                    <row><entry>0x5C</entry><entry>CLRAN2</entry><entry>WR</entry><entry>Éteint AN2</entry></row>
+                                    <row><entry>0x5D</entry><entry>SETAN2</entry><entry>WR</entry><entry>Allume AN2</entry></row>
+                                    <row><entry>0x5E</entry><entry>CLRAN3</entry><entry>WR</entry><entry>Éteint AN3</entry></row>
+                                    <row><entry>0x5F</entry><entry>SETAN3</entry><entry>WR</entry><entry>Allume AN3</entry></row>
+                                    <row><entry>0x61</entry><entry>PB0</entry><entry>R7</entry><entry>Lit l'état de PB0</entry></row>
+                                    <row><entry>0x62</entry><entry>PB1</entry><entry>R7</entry><entry>Lit l'état de PB1</entry></row>
+                                    <row><entry>0x63</entry><entry>PB2</entry><entry>R7</entry><entry>Lit l'état de PB2</entry></row>
+                                    <row><entry>0x64</entry><entry>PADDL0</entry><entry>R7</entry><entry>Lit l'état de PADDL0</entry></row>
+                                    <row><entry>0x65</entry><entry>PADDL1</entry><entry>R7</entry><entry>Lit l'état de PADDL1</entry></row>
+                                    <row><entry>0x66</entry><entry>PADDL2</entry><entry>R7</entry><entry>Lit l'état de PADDL2</entry></row>
+                                    <row><entry>0x67</entry><entry>PADDL3</entry><entry>R7</entry><entry>Lit l'état de PADDL3</entry></row>
+                                    <row><entry>0x70</entry><entry>PTRIG</entry><entry>R</entry><entry>Déclenche la charge des condensateurs*</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                        <para>* : Quand la charge est déclenchées, PTRIG passe à vrai, les
+                        observateurs sont notifiés, puis il repasse à faux (les observateurs sont de 
+                        nouveau notifiés). Tout cela dans le même cycle d'horloge (en réalité,
+                        pendant le même appel de méthode). C'est la façon dont l'unité de jeu
+                        informe les observateurs qu'il doivent commencer la simulation de la décharge.</para>
+                    </section>
+
+                </section>
+                
+                <section id="UnitGraphicMode"><title>Mode graphique (GraphicMode)</title>
+                    <para>Compatibilité : Tous modèles.</para>
+                    <para>Réference: <emphasis>Apple IIe Technical Reference Manual</emphasis>
+                    page 29 (PDF p63)</para>
+
+                    <para>Cette unité s'occupe du passage du mode texte aux modes graphiques, 
+                    excepté le mode double haute résolution qui a été implémenté plus tard. 
+                    L'Apple ][ a un mode texte et deux modes graphiques (basse et haute résolution).
+                    Un mode mixte permet de partager l'écran en deux, en ayant 4 lignes de texte
+                    en bas et le reste en graphique. Chaque mode possède deux pages correspondant
+                    à deux espaces mémoire différents.</para>
+
+                    <section><title>Interrupteurs</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Interrupteur</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>TEXT</entry><entry>Mode graphique</entry><entry>Mode texte</entry></row>
+                                    <row><entry>MIXED</entry><entry>Mode plein écran</entry><entry>Mode mixte</entry></row>
+                                    <row><entry>PAGE2</entry><entry>Page 1 affichée</entry><entry>Page 2 affichée</entry></row>
+                                    <row><entry>HIRES</entry><entry>Basse résolution </entry><entry>Haute résolution</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                    
+                    <section><title>Adresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x50</entry><entry>TXTCLR</entry><entry>RW</entry><entry>Passe TEXT à 0</entry></row>
+                                    <row><entry>0x51</entry><entry>TXTSET</entry><entry>RW</entry><entry>Passe TEXT à 1</entry></row>
+                                    <row><entry>0x52</entry><entry>MIXCLR</entry><entry>RW</entry><entry>Passe MIXED à 0</entry></row>
+                                    <row><entry>0x53</entry><entry>MIXSET</entry><entry>RW</entry><entry>Passe MIXED à 1</entry></row>
+                                    <row><entry>0x54</entry><entry>TXTPAGE1</entry><entry>RW</entry><entry>Passe PAGE2 à 0</entry></row>
+                                    <row><entry>0x55</entry><entry>TXTPAGE2</entry><entry>RW</entry><entry>Passe PAGE2 à 1</entry></row>
+                                    <row><entry>0x56</entry><entry>LORES</entry><entry>RW</entry><entry>Passe HIRES à 0</entry></row>
+                                    <row><entry>0x57</entry><entry>HIRES</entry><entry>RW</entry><entry>Passe HIRES à 1</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                        <para>Et, sur le //e et les modèles suivants, quelques adresses de lectures ont été ajoutées :</para>
+
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x1A</entry><entry>RDTEXT</entry><entry>R7</entry><entry>Lit l'état de TEXT</entry></row>
+                                    <row><entry>0x1B</entry><entry>RDMIXED</entry><entry>R7</entry><entry>Lit l'état de MIXED</entry></row>
+                                    <row><entry>0x1C</entry><entry>RDPAGE2</entry><entry>R7</entry><entry>Lit l'état de PAGE2</entry></row>
+                                    <row><entry>0x1D</entry><entry>RDHIRES</entry><entry>R7</entry><entry>Lit l'état de HIRES</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitSlots"><title>Ports d'extension (Slots)</title>
+                    <para>Compatibilité : Tous modèles.</para>
+
+                    <para>Cette unité gère les ports d'extension de l'Apple. Elle ne fait que 
+                    transférer les requêtes de lectures et d'écriture sur l'espace $C090-$C0FF vers
+                    l'unité d'entrée/sortie de la carte correspondante.</para>
+                    
+                    <para>Comme le <link linkend="BusSlotRom">Bus des ROM périphériques</link>, 
+                    cette unité doit être informée quand une carte est insérée ou retirée.</para>
+
+                    <section><title>Méthodes</title>
+                        <programlisting>void insert_card(int slot, CUnit *cardUnit);</programlisting>
+                        <para>Indique à l'unité qu'une carte a été insérée. <varname>slot</varname>
+                        est le numéro du port (1-7) et <varname>cardUnit</varname> est l'unité
+                        d'E/S de la carte d'extension.</para>
+                        <programlisting>void remove_card(int slot);</programlisting>
+                        <para>Indique à l'unité qu'une carte a été retirée. <varname>slot</varname>
+                        est le numéro du port (1-7).</para>
+                    </section>
+
+                    <section><title>Adresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x90-0x9F</entry><entry></entry><entry>RW</entry><entry>Transféré aux adresses 0x00-0x0F de la carte du port 1</entry></row>
+                                    <row><entry>0xA0-0xAF</entry><entry></entry><entry>RW</entry><entry>Transféré aux adresses 0x00-0x0F de la carte du port 2</entry></row>
+                                    <row><entry>0xB0-0xBF</entry><entry></entry><entry>RW</entry><entry>Transféré aux adresses 0x00-0x0F de la carte du port 3</entry></row>
+                                    <row><entry>0xC0-0xCF</entry><entry></entry><entry>RW</entry><entry>Transféré aux adresses 0x00-0x0F de la carte du port 4</entry></row>
+                                    <row><entry>0xD0-0xDF</entry><entry></entry><entry>RW</entry><entry>Transféré aux adresses 0x00-0x0F de la carte du port 5</entry></row>
+                                    <row><entry>0xE0-0xEF</entry><entry></entry><entry>RW</entry><entry>Transféré aux adresses 0x00-0x0F de la carte du port 6</entry></row>
+                                    <row><entry>0xF0-0xFF</entry><entry></entry><entry>RW</entry><entry>Transféré aux adresses 0x00-0x0F de la carte du port 7</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+
+                <section id="UnitLanguageCard"><title>Carte langage (Language Card)</title>
+                    <para>Compatibilité : Tous modèles (probablement sauf le ][).</para>
+
+                    <para>Réference : <emphasis>Apple IIe Technical Reference Manual</emphasis>
+                    pages 79 à 83 (PDF pp113-117)</para>
+
+                    <para>Cette unité pilote le <link linkend="BusLanguageCard">Bus de la carte 
+                    langage</link> en utilisant trois interrupteurs : LCRAM, LCBNK2 et LCWRITE.</para>
+
+                    <para>Seuls LCRAM et LCBNK2 peuvent être lus depuis l'intérieur de l'Apple.
+                    LCWRITE n'est pas le nom officiel pour cet interrupteur (j'ai choisis celui là car
+                    je n'ai pas trouvé d'autre nom dans la documentation).</para>
+
+                    <para>Pour changer l'état de LCWRITE, deux requêtes de lectures doivent
+                    être effectuées à l'adresse appropriée. Un quatrième interrupteur est utilisé
+                    dans Vinace pour gérer cette double lecture. Il est appelé LCWCHG.</para>
+
+                    <section><title>Interrupteurs</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Interrupteur</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>LCBNK2</entry><entry>Page 2 RAM utilisée en $D000-$DFFF</entry><entry>Page 1 RAM utilisée en $D000-$DFFF</entry></row>
+                                    <row><entry>LCRAM</entry><entry>ROM lue en $D000-$FFFF</entry><entry>RAM lue en $D000-$DFFF</entry></row>
+                                    <row><entry>LCWRITE</entry><entry>Pas d'écriture en $D000-$FFFF</entry><entry>Écriture en RAM en $D000-$FFFF (même si elle n'est pas visible)</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+
+                    <section><title>Adresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x11</entry><entry>RDLCBNK2</entry><entry>R7</entry><entry>Lit l'état de LCBNK2</entry></row>
+                                    <row><entry>0x12</entry><entry>RDLCRAM</entry><entry>R7</entry><entry>Lit l'état de LCRAM</entry></row>
+                                    <row><entry>0x81</entry><entry></entry><entry>R</entry><entry>Passe LCBNK2 à 1, LCRAM à 1 et LCWRITE à 0</entry></row>
+                                    <row><entry>0x81</entry><entry></entry><entry>RR</entry><entry>Passe LCBNK2 à 1, LCRAM à 0 et LCWRITE à 1</entry></row>
+                                    <row><entry>0x82</entry><entry></entry><entry>R</entry><entry>Passe LCBNK2 à 1, LCRAM à 0 et LCWRITE à 0</entry></row>
+                                    <row><entry>0x83</entry><entry></entry><entry>RR</entry><entry>Passe LCBNK2 à 1, LCRAM à 1 et LCWRITE à 1</entry></row>
+                                    <row><entry>0x84-0x87</entry><entry></entry><entry></entry><entry>Identique à 0x80-0x83</entry></row>
+                                    <row><entry>0x88</entry><entry></entry><entry>R</entry><entry>PasseLCBNK2 à 0, LCRAM à 1 et LCWRITE à 0</entry></row>
+                                    <row><entry>0x89</entry><entry></entry><entry>RR</entry><entry>Passe LCBNK2 à 0, LCRAM à 0 et LCWRITE à 1</entry></row>
+                                    <row><entry>0x8A</entry><entry></entry><entry>R</entry><entry>Passe LCBNK2 à 0, LCRAM à 0 et LCWRITE à 0</entry></row>
+                                    <row><entry>0x8B</entry><entry></entry><entry>RR</entry><entry>Passe LCBNK2 à 0, LCRAM à 1 et LCWRITE à 1</entry></row>
+                                    <row><entry>0x8C-0x8F</entry><entry></entry><entry></entry><entry>Identique à 0x88-0x8B</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                </section>
+
+                <section id="UnitAuxMemory"><title>Mémoire auxiliaire (Aux Memory)</title>
+                    <para>Compatibilité: //e et suivants.</para>
+                    <para>Malheureusement cette unité n'est pas encore implémentée.</para>
+                </section>
+
+                <section id="UnitTextMode"><title>Mode texte (Text Mode)</title>
+                    <para>Compatibilité: //e et suivants.</para>
+
+                    <para>Cette unité s'occupe du passage entre les modes 40 et 80 colonnes,
+                    ainsi que du changement de police de caractère.</para>
+
+                    <section><title>Interrupteurs</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Interrupteur</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>80VID</entry><entry>Affichage 40 colonnes</entry><entry>Affichage 80 colonnes</entry></row>
+                                    <row><entry>ALTCHAR</entry><entry>Utilisation de la police primaire</entry><entry>Utilisation de la police alternative</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                    <section><title>Adresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x0C</entry><entry>CLR80VID</entry><entry>W</entry><entry>Passe 80VID à 0</entry></row>
+                                    <row><entry>0x0D</entry><entry>SET80VID</entry><entry>W</entry><entry>Passe 80VID à 1</entry></row>
+                                    <row><entry>0x0E</entry><entry>CLRALTCHAR</entry><entry>W</entry><entry>Passe ALTCHAR à 0</entry></row>
+                                    <row><entry>0x0F</entry><entry>SETALTCHAR</entry><entry>W</entry><entry>Passe ALTCHAR à 1</entry></row>
+                                    <row><entry>0x1E</entry><entry>RDALTCHAR</entry><entry>R7</entry><entry>Lit l'état de ALTCHAR</entry></row>
+                                    <row><entry>0x1F</entry><entry>RD80VID</entry><entry>R7</entry><entry>Lit l'état de 80VID</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+
+                    </section>
+
+                </section>
+
+                <section id="UnitIoRom"><title>Rom E/S (I/O Rom)</title>
+                    <para>Compatibilité : //e, IIgs</para>
+
+                    <para>Certains modèles d'Apple avaient plus de 12Ko de ROM. Pour accéder
+                    aux reste de la ROM, l'espace mémoire $C100-$CFFF, habituellement réservé
+                    aux ROMs des périphériques, pouvait être utilisé. Une fenêtre en $C300-$C3FF,
+                    correspondant à la carte 80 colonne, pouvait être sélectionnée spécifiquement.</para>
+
+                    <para>Cette unité pilote le <link linkend="BusIoRom">Bus de la ROM E/S</link>
+                    qui s'occupe de la commutation entre la ROM interne et la ROM des périphériques
+                    en $C100-$CFFF.</para>
+
+                    <section><title>Interrupteurs</title>
+                        <informaltable>
+                            <tgroup cols="3">
+                                <thead>
+                                    <row><entry>Interrupteur</entry><entry>Off</entry><entry>On</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>CXROM</entry><entry>ROM périphériques en $C100-$CFFF</entry><entry>ROM interne en $C100-$CFFF</entry></row>
+                                    <row><entry>C3ROM</entry><entry>ROM sélectionnée par CXROM en $C300-$C3FF</entry><entry>ROM interne en $C300-$C3FF</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                    
+                    <section><title>Adresses</title>
+                        <informaltable>
+                            <tgroup cols="4">
+                                <thead>
+                                    <row><entry>Adresse</entry><entry>Nom</entry><entry>Accès</entry><entry>Effet</entry></row>
+                                </thead>
+                                <tbody>
+                                    <row><entry>0x06</entry><entry>SETSLOTCXROM</entry><entry>W</entry><entry>Passe CXROM à 0</entry></row>
+                                    <row><entry>0x07</entry><entry>SETINTCXROM</entry><entry>W</entry><entry>Passe CXROM à 1</entry></row>
+                                    <row><entry>0x0A</entry><entry>SETINTC3ROM</entry><entry>W</entry><entry>Passe C3ROM à 0</entry></row>
+                                    <row><entry>0x0B</entry><entry>SETSLOTC3ROM</entry><entry>W</entry><entry>Passe C3ROM à 1</entry></row>
+                                    <row><entry>0x15</entry><entry>RDCXROM</entry><entry>R7</entry><entry>Lit l'état de CXROM</entry></row>
+                                    <row><entry>0x17</entry><entry>RDC3ROM</entry><entry>R7</entry><entry>Lit l'état de C3ROM</entry></row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </section>
+                </section>
+            </section>
+        </chapter>
+        <chapter lang="fr"><title>Pas encore implémenté</title>
+            <para>Voici des fonctionnalités qui doivent être implémentées :</para>
+            <itemizedlist>
+                <listitem><para>Entrée et sortie cassette</para></listitem>
+                <listitem><para>128Ko de mémoire (AuxMemory)</para></listitem>
+                <listitem><para>Signal d'effacement vertical</para></listitem>
+                <listitem><para>Lecture des images disques en format "ordre ProDOS" (.po) et en format "nibbles" (.nib)</para></listitem>
+                <listitem><para>Écriture sur disquettes</para></listitem>
+            </itemizedlist>
+            <para>D'autres fonctionnalités peuvent aussi être implémentées mais elle sont moins importantes :</para>
+            <itemizedlist>
+                <listitem><para>Un clavier capable de faire du "coller"</para></listitem>
+                <listitem><para>Un lecteur de disquette faisant du bruit</para></listitem>
+            </itemizedlist>
+        </chapter>
+        <chapter lang="fr"><title>Références</title>
+            <section><title>Sur internet</title>
+                <section id="Asimov"><title>Asimov</title>
+                    <para>Le dépôt Asimov est <emphasis>le</emphasis> site internet où il faut
+                    aller pour trouver des trucs sur l'Apple II. Il y a des images disque, la documentation
+                    originale, des images des ROM, des émulateurs, etc.</para>
+
+                    <para>Le dépôt Asimov est ici : <ulink url="ftp://ftp.apple.asimov.net/pub/apple_II">
+                    ftp://ftp.apple.asimov.net/pub/apple_II</ulink></para>
+                </section>
+                <section><title>Jon Relay's Apple II Info Archives</title>
+                    <para>Jon Relay's Apple II Info Archives contient des trucs très utiles que 
+                    l'on peut aussi trouver dans les manuels de référence, excepté la fabuleuse
+                    page sur la mémoire d'entrée sortie qui résume les entrées/sorties de tous
+                    les modèles d'Apple II en un seul grand tableau :</para>
+                    <para><ulink url="http://www.kreativekorp.com/miscpages/a2info/iomemory.shtml">http://www.kreativekorp.com/miscpages/a2info/iomemory.shtml</ulink></para>
+                </section>
+            </section>
+            <section><title>Livres anglais</title>
+                <para>Voici les livres les plus intéressants. Ils peuvent tous être trouvés dans
+                le <link linkend="Asimov">dépôt Asimov</link>.</para>
+                <section><title>Apple IIe Technical Reference Manual</title>
+                    <para>C'est la bible. Pratiquement tout y est expliqué. Je possède la version
+                    française. La version originale anglaise se trouve ici :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple%20IIe%20Technical%20Reference%20Manual.pdf">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple%20IIe%20Technical%20Reference%20Manual.pdf</ulink>
+                    </para>
+                </section>
+                <section><title>Apple II Reference Manual January 1978</title>
+                    <para>C'est une bible plus ancienne. Aussi connu sous le nom du <emphasis>livre rouge</emphasis>.
+                    Par chance, j'en ai récupéré un exemplaire sur ebay. Une version PDF se trouve ici :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple_II_Redbook.pdf">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/documentation/Apple_II_Redbook.pdf</ulink></para>
+                </section>
+                <section><title>Understanding the Apple II</title>
+                    <para>J'ai lu le chapitre 8, à propos du Disk II Controller car les manuels
+                    Apple ne fournissaient aucune information à son propos. Je n'ai pas lu le
+                    reste du livre (n'ayant pas de version papier) mais il semble vraiment 
+                    intéressant, allant en profondeur dans la description de l'Apple II. Une
+                    version PDF se trouve ici :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/documentation/understanding%20the%20apple%20ii.pdf">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/documentation/understanding the apple ii.pdf</ulink></para>
+                </section>
+            </section>
+            <section><title>Emulateurs existants</title>
+                <section><title>YAE - Yet Another Apple Emulator</title>
+                    <para>Avant que je ne décide d'écrire Vinace, j'ai utilisé YAE. Il a beaucoup
+                    de limitation : pas de joystick simple, pas d'interface facile pour les disquettes.</para>
+                    <para>J'ai tout d'abord essayé de l'améliorer mais j'ai rapidement réalisé
+                    que réécrire un nouvel émulateur ne serait pas plus compliqué.</para>
+                    <para>J'ai beaucoup étudié le code source de YAE pendant l'écriture de 
+                    Vinace. J'ai récupéré les routines pour l'encodage et le décodage des nibbles,
+                    utilisées dans les lecteurs de disquettes. Les fichiers 
+                    <emphasis>gcr.h</emphasis> et <emphasis>gcr.cpp</emphasis>
+                    sont quasiment identiques à ceus dans YAE.</para>
+                    <para>Il semble que le site de YAE n'existe plus
+                    (<ulink url="http://quark.netfront.net:6502/">http://quark.netfront.net:6502/</ulink>)
+                    mais le code source peut toujours être trouvé sur le dépôt Asimov ici :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/yae/yae-0.1.tar.gz">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/emulators/yae/yae-0.1.tar.gz</ulink></para>
+                </section>
+            </section>
+                <section><title>Appleblossom - Portable Open-Source Apple IIe Emulator</title>
+                    <para>Quand je ne trouvais pas les réponses ni dans la documentation
+                    ni dans le code source de YAE, je cherchais dans le source de Apple Blossom.</para>
+                    <para>J'ai pris le code pour la police de caractère depuis Apple Blossom. 
+                    Il est maintenant dans le fichier <emphasis>CCharset.cpp</emphasis>.</para>
+                    <para>Le code source de Apple Blossom est ici :</para>
+                    <para><ulink url="ftp://ftp.apple.asimov.net/pub/apple_II/emulators/appleblossom/appleblossom.zip">
+                    ftp://ftp.apple.asimov.net/pub/apple_II/emulators/appleblossom/appleblossom.zip</ulink></para>
+                </section>
+        </chapter>
+    </part>
+</book>
