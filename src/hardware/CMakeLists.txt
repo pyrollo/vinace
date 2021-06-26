@@ -1,0 +1,26 @@
+set(HARDWARE_SOURCE_FILES
+	${CMAKE_CURRENT_SOURCE_DIR}/c-carry-clock.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-clock.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-cycle-and-wait-clock.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-disk-drive.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-floppy-disk.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-keyboard.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-paddles.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-speaker.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/gcr.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/cards/c-card.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/cards/c-disk-controler-card.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/models/c-computer-hardware.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/models/c-apple2e-hardware.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-charset.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-graphic-mode-renderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-gr-renderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-hgr-renderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-main-video-output.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-text-mode-renderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-text-renderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-video-output.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/video/c-video-renderer.cpp
+	PARENT_SCOPE
+)
+

@@ -1,0 +1,25 @@
+set(CORE_SOURCE_FILES
+	${CMAKE_CURRENT_SOURCE_DIR}/c-io-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-memory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-observable.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-processor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/c-processor6502.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/busses/c-io-rom-bus.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/busses/c-io-rom-bus.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/busses/c-language-card-bus.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/busses/c-main-memory-bus.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/busses/c-slot-rom-bus.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/models/c-computer-core.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/models/c-apple2e-core.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-disk-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-game-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-graphic-mode-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-io-rom-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-keyboard-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-language-card-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-slots-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-speaker-unit.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/units/c-text-mode-unit.cpp
+	PARENT_SCOPE
+)

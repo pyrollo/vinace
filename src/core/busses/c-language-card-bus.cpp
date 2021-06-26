@@ -2,17 +2,17 @@
 /*
  * Vinace
  * Copyright (C) P.Y. Rollo 2009 <dev@pyrollo.com>
- * 
+ *
  * Vinace is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Vinace is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,7 @@
 #
 CLanguageCardBus::CLanguageCardBus(CLanguageCardUnit *unit, CMemory *rom12k, CMemory *ram16k) {
 	this->unit = unit;
-	
+
 	this->loRom  = rom12k;
 	this->hiRom  = new CMemoryProxy(rom12k, 0x1000);
 	this->loRam1 = ram16k;
@@ -29,7 +29,7 @@ CLanguageCardBus::CLanguageCardBus(CLanguageCardUnit *unit, CMemory *rom12k, CMe
 	this->hiRam  = new CMemoryProxy(ram16k, 0x2000);
 
 	unit->subscribe(this);
-	
+
 	// Suppose settings have changed
 	notify((CObservable *)unit);
 }
@@ -44,6 +44,7 @@ CLanguageCardBus::~CLanguageCardBus() {
 BYTE CLanguageCardBus::read(WORD addr) {
 	if (addr <0x1000) return loMemRead->read(addr);
 	if (addr <0x3000) return hiMemRead->read(addr-0x1000);
+	return 0; // Should not occure
 }
 
 void CLanguageCardBus::write(WORD addr, BYTE byte) {

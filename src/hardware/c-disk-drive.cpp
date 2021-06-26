@@ -2,17 +2,17 @@
 /*
  * Vinace
  * Copyright (C) P.Y. Rollo 2009 <dev@pyrollo.com>
- * 
+ *
  * Vinace is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Vinace is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -55,15 +55,15 @@ CDiskDrive::CDiskDrive(CClock *clock, CDriveInterface *interface) {
 		interface->set_protection(false);
 		interface->subscribe(this);
 	}
-	
+
 	motor = false;
 	nibble_ready = false;
 	disk = 0;
 	stepper_status = 0;
 	head_position = 0;
 	disk_position = 0;
-	
-	clock->set_timer(CYCLES_PER_NIBBLE, &timer_callback, this); 
+
+	clock->set_timer(CYCLES_PER_NIBBLE, &timer_callback, this);
 }
 
 CDiskDrive::~CDiskDrive() {
@@ -140,14 +140,14 @@ void CDiskDrive::set_motor(bool on) {
 void CDiskDrive::set_magnet(int magnet, bool on)
 {
 	if ( on )
-		stepper_status |= (1<<magnet); 
+		stepper_status |= (1<<magnet);
 	else
 		stepper_status &= ~(1<<magnet);
-		
+
 	if ( motor ) {
 
 		head_position +=  stepper_movement_table[stepper_status][head_position & 0x07];
-	
+
 		if ( head_position < 0 ) {
 			printf("CDiskDrive: Reached first track !\n");
 	  		head_position = 0;
@@ -167,12 +167,12 @@ void CDiskDrive::next_nibble() {
 		disk_position ++;
 		if (nibble_ready)
 			missed++;
-		else 
+		else
 			if (missed) {
-				printf("Missed %d at %d\n", missed, disk_position);
+				printf("Missed %ld at %d\n", missed, disk_position);
 				missed=0;
 		}
-		if (disk_position >= disk->get_position_maximum()) { 
+		if (disk_position >= disk->get_position_maximum()) {
 			disk_position = 0; printf("Turn completed\n");}
 		nibble_ready = true;
 	}
@@ -182,7 +182,7 @@ BYTE CDiskDrive::read_nibble() {
 	BYTE data;
 	if (!disk) return 0;
 	if (!motor) return 0;
-	
+
  	data = disk->get_nibble(head_position >> 2, disk_position);
 	return data;
 }
@@ -194,5 +194,5 @@ void CDiskDrive::write_nibble(BYTE data) {
 
 	// TODO :manage write protect
 	// TODO :manage write !
-	
+
 }

@@ -2,27 +2,27 @@
 /*
  * Vinace
  * Copyright (C) P.Y. Rollo 2009 <dev@pyrollo.com>
- * 
+ *
  * Vinace is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Vinace is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "c-apple2e-core.hpp"
-#include "c-processor6502.hpp"
-#include "busses/c-io-rom-bus.hpp"
-#include "busses/c-language-card-bus.hpp"
-#include "busses/c-main-memory-bus.hpp"
-#include "busses/c-slot-rom-bus.hpp"
+#include "core/c-processor6502.hpp"
+#include "core/busses/c-io-rom-bus.hpp"
+#include "core/busses/c-language-card-bus.hpp"
+#include "core/busses/c-main-memory-bus.hpp"
+#include "core/busses/c-slot-rom-bus.hpp"
 
 //
 // IO UNIT
@@ -61,7 +61,7 @@ CApple2eIoUnit::CApple2eIoUnit() {
 	assign_read(      0x15,       ioRom);
 	assign_read(      0x17,       ioRom);
 	assign_read(      0x1E, 0x1F, textMode);
-	
+
 	reset();
 }
 
@@ -98,25 +98,25 @@ CApple2eCore::CApple2eCore(CMemory *lcRom, CMemory *intRom) {
 
 	// Input Output Unit
 	iou = new CApple2eIoUnit();
-	
+
 	// RAM : main and language card
 	ram   = new CRamMemory(0x10000); // To be replaced by a AuxiliaryBus for 128K ram
 	lcRam = new CMemoryProxy(ram, 0xC000);
-	
+
 	slotBus = new CSlotRomBus();
 	ioBus   = new CIoRomBus(iou->ioRom, slotBus, intRom);
 	lcBus   = new CLanguageCardBus(iou->languageCard, lcRom, lcRam);
-	
+
 	// memory as seen by the processor
 	memory = new CMainMemoryBus(ram, iou, ioBus, lcBus);
-	
+
 	// 6502 processor
 	processor = new CProcessor6502(memory);
 
 	// Issue a first reset
 	reset();
 }
-		   
+
   CApple2eCore::~CApple2eCore() {
 	delete processor;
 	delete memory;
