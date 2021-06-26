@@ -1,0 +1,10 @@
+# Editors
+*~
+.vim
+
+## Build files
+CMakeFiles
+Makefile
+cmake_install.cmake
+CMakeCache.txt
+src/config.h
