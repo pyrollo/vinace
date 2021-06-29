@@ -29,6 +29,7 @@
 #include "c-pulse-audio-sound.hpp"
 #include <fstream>
 #include <iostream>
+#include "config.h"
 
 void load_rom(CRomMemory *rom, const char *filename, int offset) {
     std::ifstream file (filename, std::ios::in|std::ios::binary);
@@ -63,6 +64,8 @@ int main(int argc, char *argv[])
 	// Build GUI
 	Gtk::Main main(argc, argv);
 	Gtk::Window window;
+	window.set_title(VINACE_FULL_NAME);
+
 	Gtk::VBox   box;
 	window.add(box);
 
