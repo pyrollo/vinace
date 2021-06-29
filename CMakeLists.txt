@@ -4,6 +4,8 @@ project(vinace VERSION 0.1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 find_package(Threads REQUIRED)
@@ -20,5 +22,4 @@ find_library(PULSEAUDIO_LIBRARY
 include_directories(${PULSEAUDIO_INCLUDE_DIRS})
 
 add_subdirectory(src)
-
 

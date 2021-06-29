@@ -7,7 +7,6 @@ set(GUI_SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/c-gui-numpad-joystick.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/c-pulse-audio-sound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/c-sound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/main.cc
 	PARENT_SCOPE
 )
 

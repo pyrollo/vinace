@@ -2,3 +2,6 @@
 #define VINACE_VERSION_MINOR @vinace_VERSION_MINOR@
 
 #define VINACE_FULL_NAME "Vinace v@vinace_VERSION_MAJOR@.@vinace_VERSION_MINOR@"
+
+#define RESOURCE_DIR "resources/"
+#define ROM_DIR "roms/"
